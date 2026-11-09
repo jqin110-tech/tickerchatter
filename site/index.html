@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TickerChatter</title>
+<meta name="description" content="Type any company and see whether the news is talking about it far more than usual today.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232E4BD8'/%3E%3Cpath d='M5 19h5l3-9 4 14 3-8 2 3h5' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,650;12..96,750&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#run">Skip to the search</a>
+
+<header class="nav">
+  <a class="brand" href="#top" aria-label="TickerChatter, back to top">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9"/><path d="M5 19h5l3-9 4 14 3-8 2 3h5"/></svg>
+    TickerChatter
+  </a>
+  <nav aria-label="Sections">
+    <a href="#today">Today</a>
+    <a href="#how">How it works</a>
+    <button class="theme" id="theme" type="button" aria-label="Switch colour theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg></button>
+  </nav>
+</header>
+
+<main id="top">
+  <!-- Hero: the search is the first thing people can do -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <h1 id="hero-title" class="lines reveal-lines">
+        <span class="line"><span>Is the news</span></span>
+        <span class="line"><span>obsessed with</span></span>
+        <span class="line"><span>your stock today?</span></span>
+      </h1>
+      <p class="hero-sub reveal" style="--d:.35s">Type a company. TickerChatter reads two weeks of headlines, counts the mentions, and tells you if today is unusual.</p>
+      <form class="search reveal" id="run" style="--d:.5s" autocomplete="off">
+        <label class="sr" for="q">Company or ticker</label>
+        <input id="q" name="q" list="tickers" placeholder="Try Micron or NVDA" maxlength="40" required>
+        <datalist id="tickers"></datalist>
+        <button type="submit">Run</button>
+      </form>
+      <p class="hint reveal" id="hint" style="--d:.6s"></p>
+    </div>
+    <div class="chips" id="chips" aria-label="Stocks moving today"></div>
+  </section>
+
+  <!-- Live run: appears after a search -->
+  <section class="runner" id="runner" hidden aria-live="polite" aria-labelledby="run-title">
+    <h2 id="run-title" class="sr">Search result</h2>
+    <ol class="pipe" id="pipe"></ol>
+    <div class="result focus" id="result"></div>
+  </section>
+
+  <!-- Today: the hourly collection -->
+  <section class="today" id="today" aria-labelledby="today-title">
+    <div class="sec-head focus">
+      <h2 id="today-title" class="lines reveal-lines"><span class="line"><span>Today, across 40 stocks</span></span></h2>
+      <p class="meta reveal" id="updated"></p>
+    </div>
+    <figure class="strip reveal focus" style="--d:.1s">
+      <div class="strip-plot" id="strip"></div>
+      <figcaption>Each bar is one stock. Taller above the line means more coverage than its usual level. <span class="key"><span><i class="k-spike"></i>Spike</span><span><i class="k-elev"></i>Elevated</span><span><i class="k-norm"></i>Normal</span><span><i class="k-build"></i>Too new to score</span></span></figcaption>
+    </figure>
+    <div class="movers focus" id="movers"></div>
+    <div class="all focus">
+      <button class="more reveal bubble" id="more" type="button" aria-expanded="false" aria-controls="list">Show all 40 stocks</button>
+      <div class="list-wrap" id="list-wrap"><div><ul class="list" id="list"></ul></div></div>
+    </div>
+  </section>
+
+  <!-- How it works: each step opens to show the real code -->
+  <section class="how" id="how" aria-labelledby="how-title">
+    <div class="sec-head focus">
+      <h2 id="how-title" class="lines reveal-lines"><span class="line"><span>How it works</span></span></h2>
+      <p class="meta reveal">Four steps, written in Python. Open one to see the code.</p>
+    </div>
+    <ol class="steps focus" id="steps"></ol>
+    <div class="formula reveal focus" aria-label="z equals today's count minus the usual count, divided by the usual swing">
+      <span class="f-z">z</span><span class="f-eq">=</span>
+      <span class="f-frac"><span>today − usual</span><span>usual swing</span></span>
+      <p>Above 2 is a spike: a jump that happens by chance only a few percent of the time.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot focus">
+  <p>Built by Joshua Qin. Python, Pyodide and a Cloudflare Worker. Counts measure attention, not whether news is good or bad, and nothing here is trading advice.</p>
+</footer>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-bg" data-close></div>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <button class="close" type="button" data-close aria-label="Close">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<div class="tip" id="tip" role="tooltip" hidden></div>
+
+<script src="config.js"></script>
+<script src="data/latest.js" onerror="void 0"></script>
+<script src="app.js"></script>
+</body>
+</html>
