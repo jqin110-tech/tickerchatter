@@ -53,7 +53,11 @@ python -m pipeline.diagnose NVDA CVX       # what each day's search found
 1. **One search per day.** For each stock, Google News is searched once per
    California day (`after:2026-11-09 before:2026-11-10`), because Google's
    date filters use Pacific time. A headline counts only if it was really
-   published that day and names the company.
+   published that day and names the company. For JPMorgan, Goldman Sachs
+   and Bank of America, their analysts rating other companies ("JPMorgan
+   downgrades Nike") doesn't count: that's news about Nike, not the bank.
+   If this rule changes, every stored day is searched again under the new
+   one (`COUNT_RULES` in `run.py`).
 2. **Every day is searched the same way.** Past days are searched once after
    they end. Today is searched again every hour, and each new search
    replaces the last one instead of adding to it.
@@ -63,9 +67,14 @@ python -m pipeline.diagnose NVDA CVX       # what each day's search found
    weekday is compared with the weekdays in the last 14 days. Weekends are
    compared with all 14 days, because four weekend days is too few for a
    steady average.
-5. **z-score.** `z = (today so far − usual) / wobble`, where the wobble
-   (standard deviation) is at least 1 so that 0, 0, 1 headlines can't look
-   like a huge swing. `z ≥ 2` is a spike, `z ≥ 1` is elevated.
+5. **z-score.** `z = (today so far − usual) / wobble`. The wobble is the
+   standard deviation of the baseline days, but never less than √usual
+   (or 1). Headline counts behave roughly like a Poisson count, which
+   swings by about √mean from luck alone. With only ~10 baseline days a
+   quiet stock can have an unusually steady stretch, and then 11 headlines
+   against a usual 6.5 looked like z = 4. With the floor it's z = 1.7.
+   Busy stocks barely notice the floor, because their real wobble is
+   already bigger than √mean. `z ≥ 2` is a spike, `z ≥ 1` is elevated.
 6. **The 100-result cap.** Google returns at most 100 results per search. A
    capped day only says "at least 100", so a stock that hits the cap
    switches to a narrower query (`"Nvidia stock"` instead of `"Nvidia"`),
@@ -84,6 +93,15 @@ perfectly steady fake stock: the old method gives z ≈ 5 in the evening,
 the new one gives z ≈ 0. A fresh backfill with the fix gives 6 of 40
 spikes, and the stories behind them are real (for example Berkshire
 Hathaway right after its earnings).
+
+Checking the first night's 8 spikes (2026-11-09) against the news found
+4 clearly real (Nvidia's CEO probe, Broadcom +9%, Lilly's trial results,
+Berkshire's earnings) and 3 false alarms: Walmart (11 headlines vs a usual
+7, small-number luck), Bank of America (its analysts' notes about other
+companies) and Costco (holiday shopping coverage building for weeks). The
+√mean floor and the analyst-note rule above fixed the first two. Replaying
+the 7 weekdays from Oct 30 to Nov 9, the floor alone cut spikes from 56 to
+51, all of them small-count cases; no big story moved.
 
 ## Put it online (free)
 
@@ -126,6 +144,16 @@ Without this, searches only work for the 40 tracked stocks.
 - The hourly job makes one Google search per stock (plus Yahoo for the
   headline list). The first run, or any run after a stock switches query,
   makes up to 15 per stock.
+- **Slow trends.** The usual level is a 14-day average, so a topic that
+  builds for weeks (Costco and Walmart before the holidays) can stay
+  "spiking" for days. A shorter baseline or a median was tried on the
+  replay and didn't help (the median made it worse, 51 → 74 spikes), so
+  this waits for more data.
+- **Mentions aren't always about the company.** The analyst-note rule
+  only covers the three banks. Shopping-deal headlines ("Walmart's best
+  snow shovel deal") still count for retailers.
+- Small counts are still noisy: on the narrow query some stocks get
+  2-10 headlines a day, where a handful extra can be a spike.
 - Name matching is case sensitive, so "apple" never counts, but a headline
   starting with "Apple pie" would.
 - It measures attention, not whether news is good or bad, and it isn't

@@ -7,6 +7,10 @@ without aliases most mentions would be missed.
 `strict=True` means the symbol is also a common word or too short to trust
 on its own (like "ARM" or "NOW"), so it only counts when written as a
 cashtag ($ARM) or in brackets (ARM). The aliases still count normally.
+
+`analyst_firm=True` marks banks whose research teams rate other companies
+all day ("JPMorgan downgrades Nike"). Those headlines are skipped for the
+bank, see extract.research_note_pattern.
 """
 
 WATCHLIST = [
@@ -37,9 +41,9 @@ WATCHLIST = [
     {"symbol": "SHOP", "name": "Shopify", "sector": "Software", "aliases": ["Shopify"], "strict": True},
     {"symbol": "UBER", "name": "Uber", "sector": "Software", "aliases": ["Uber"]},
     # Finance
-    {"symbol": "JPM", "name": "JPMorgan", "sector": "Finance", "aliases": ["JPMorgan", "JP Morgan", "J.P. Morgan"]},
-    {"symbol": "GS", "name": "Goldman Sachs", "sector": "Finance", "aliases": ["Goldman Sachs", "Goldman"], "strict": True},
-    {"symbol": "BAC", "name": "Bank of America", "sector": "Finance", "aliases": ["Bank of America", "BofA"]},
+    {"symbol": "JPM", "name": "JPMorgan", "sector": "Finance", "aliases": ["JPMorgan", "JP Morgan", "J.P. Morgan"], "analyst_firm": True},
+    {"symbol": "GS", "name": "Goldman Sachs", "sector": "Finance", "aliases": ["Goldman Sachs", "Goldman"], "strict": True, "analyst_firm": True},
+    {"symbol": "BAC", "name": "Bank of America", "sector": "Finance", "aliases": ["Bank of America", "BofA"], "analyst_firm": True},
     {"symbol": "COIN", "name": "Coinbase", "sector": "Finance", "aliases": ["Coinbase"], "strict": True},
     {"symbol": "BRK.B", "name": "Berkshire Hathaway", "sector": "Finance", "aliases": ["Berkshire Hathaway", "Berkshire"]},
     # Consumer

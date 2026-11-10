@@ -15,7 +15,7 @@ import json
 from collections import Counter
 from datetime import date, datetime
 
-from .extract import headline_key, pattern_for
+from .extract import headline_key, matcher_for
 from .stats import CHART_DAYS, pacific, score
 from .tickers import BY_SYMBOL, WATCHLIST
 
@@ -41,7 +41,7 @@ def analyze(items_json: str, company_json: str, now_iso: str, days_fetched: int)
     items = json.loads(items_json)
     company = json.loads(company_json)
     now = datetime.fromisoformat(now_iso)
-    pattern = pattern_for(company)
+    counts_for_company = matcher_for(company)  # same rule as the hourly job
 
     # Step 1 already happened on the server. Step 2: drop duplicates.
     seen, unique = set(), []
@@ -52,7 +52,7 @@ def analyze(items_json: str, company_json: str, now_iso: str, days_fetched: int)
             unique.append(item)
 
     # Step 3: keep the headlines that actually name the company.
-    matched = [i for i in unique if pattern.search(i["title"])]
+    matched = [i for i in unique if counts_for_company(i["title"])]
     # Same rule as the hourly job: a headline only counts for the day its
     # search asked for. Otherwise Google's loose date filter lets one day's
     # search spill into its neighbours.
@@ -77,7 +77,7 @@ def analyze(items_json: str, company_json: str, now_iso: str, days_fetched: int)
         "matched": len(matched),
         **stats,
         "headlines": recent[:12],
-        "rejected_example": next((i["title"] for i in unique if not pattern.search(i["title"])), None),
+        "rejected_example": next((i["title"] for i in unique if not counts_for_company(i["title"])), None),
     })
 
 

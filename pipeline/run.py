@@ -40,6 +40,11 @@ SITE_PY = ROOT / "site" / "py" / "pipeline"
 # live.py and its imports run in the browser; fetch.py is copied so the site can show its code.
 BROWSER_FILES = ["__init__.py", "tickers.py", "extract.py", "stats.py", "live.py", "fetch.py"]
 KEEP_DAYS = 45
+# Bump this whenever the rule for "does this headline count" changes
+# (extract.py). Days counted under an older rule get searched again, so
+# today and the baseline are always counted the same way. 2 = research
+# notes no longer count for JPMorgan, Goldman Sachs and Bank of America.
+COUNT_RULES = 2
 
 
 def load_store() -> dict:
@@ -63,6 +68,11 @@ def tier_of(store: dict, symbol: str) -> str:
     return store.get("tier", {}).get(symbol, "broad")
 
 
+def counted_like_now(snap: dict, tier: str) -> bool:
+    """Same query and same counting rule as a search made today would use."""
+    return snap.get("tier", "broad") == tier and snap.get("rules", 1) == COUNT_RULES
+
+
 def days_to_search(store: dict, symbol: str, now: datetime, redo_all: bool = False) -> list[date]:
     today = pacific_today(now)
     tier = tier_of(store, symbol)
@@ -71,7 +81,7 @@ def days_to_search(store: dict, symbol: str, now: datetime, redo_all: bool = Fal
     for k in range(CHART_DAYS):
         day = today - timedelta(days=k)
         snap = saved.get(day.isoformat())
-        if redo_all or snap is None or not snap["complete"] or snap.get("tier", "broad") != tier:
+        if redo_all or snap is None or not snap["complete"] or not counted_like_now(snap, tier):
             need.append(day)
     return need
 
@@ -106,6 +116,7 @@ def record_day(store: dict, symbol: str, day: date, items: list[dict] | None, no
         "complete": pacific_today(now) > day,
         "capped": len(items) >= GOOGLE_CAP,  # count is "at least this many"
         "tier": tier,
+        "rules": COUNT_RULES,
         "times": sorted(times.values()),
     }
 
@@ -147,7 +158,7 @@ def score_ticker(store: dict, symbol: str, now: datetime) -> dict:
     times, missing, capped = [], set(), set()
     for k in range(CHART_DAYS):
         snap = saved.get((today - timedelta(days=k)).isoformat())
-        if snap is None or snap.get("tier", "broad") != tier:
+        if snap is None or not counted_like_now(snap, tier):
             missing.add(k)
             continue
         times += [datetime.fromisoformat(t) for t in snap["times"]]
@@ -220,7 +231,7 @@ def build_output(store: dict, now: datetime) -> dict:
         },
         "thresholds": {"spike": 2.0, "elevated": 1.0, "min_baseline_days": 3},
         "watchlist": [
-            {"strict": False, **{k: t.get(k) for k in ("symbol", "name", "sector", "aliases", "strict") if k in t}}
+            {"strict": False, **{k: t.get(k) for k in ("symbol", "name", "sector", "aliases", "strict", "analyst_firm") if k in t}}
             for t in WATCHLIST
         ],
         "tickers": tickers,
@@ -234,7 +245,14 @@ def publish(output: dict) -> None:
     (SITE_DATA / "latest.json").write_text(text)
     # Same data as a script, so index.html also works when double-clicked.
     (SITE_DATA / "latest.js").write_text(f"window.TICKERCHATTER_DATA = {text};\n")
-    # Copy the Python the browser runs, so the site always uses the same code.
+    copy_browser_code()
+
+
+def copy_browser_code() -> None:
+    """Copy the Python the browser runs, so the site always uses the same code.
+
+    After editing pipeline/ by hand:  python -c "from pipeline.run import copy_browser_code as c; c()"
+    """
     SITE_PY.mkdir(parents=True, exist_ok=True)
     here = Path(__file__).resolve().parent
     for name in BROWSER_FILES:
