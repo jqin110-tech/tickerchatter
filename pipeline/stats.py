@@ -14,9 +14,10 @@ days, too few for a steady average, so a weekend day is compared with
 all 14.
 
 For each ticker:
-  mean = average headlines over the baseline days (same hours)
-  std  = how much that number usually wobbles
-  z    = (today so far - mean) / std
+  mean   = average headlines over the baseline days (same hours)
+  std    = how much that number wobbled over those days
+  spread = the wobble we divide by: std, but never less than sqrt(mean)
+  z      = (today so far - mean) / spread
 
 z = 0 means a normal day. z = 2 means today is two "usual wobbles" above
 normal, which happens by chance only a few percent of the time. That's
@@ -83,6 +84,19 @@ def same_hours_counts(times: list[datetime], now: datetime, n: int) -> list[int]
     return counts
 
 
+def spread_of(mean: float, std: float) -> float:
+    """How big a "usual wobble" is, for turning a difference into a z-score.
+
+    Headlines arrive like independent random events, and counts of those
+    vary by about sqrt(mean) by luck alone (a Poisson count: mean 9 swings
+    by about 3). With only ~10 baseline days, a stock can have a stretch of
+    unusually steady days, making std look smaller than that. Then a small
+    bump like 11 vs a usual 6.5 scores as a spike. Busy stocks barely notice
+    this floor, because their real std is already bigger than sqrt(mean).
+    """
+    return max(std, mean ** 0.5, STD_FLOOR)
+
+
 def score(times: list[datetime], now: datetime, missing: set[int] = frozenset(),
           capped: set[int] = frozenset()) -> dict:
     """missing: days (k) whose search failed or never ran. They're left out of the
@@ -110,6 +124,7 @@ def score(times: list[datetime], now: datetime, missing: set[int] = frozenset(),
         "baseline_days": len(baseline),
         "mean": None,
         "std": None,
+        "spread": None,
         "z": None,
         "ratio": None,
         "status": "building",
@@ -119,10 +134,12 @@ def score(times: list[datetime], now: datetime, missing: set[int] = frozenset(),
     if 0 not in missing and len(baseline) >= MIN_BASELINE and not result["capped"]:
         mean = statistics.mean(baseline)
         std = statistics.stdev(baseline)
-        z = (current - mean) / max(std, STD_FLOOR)
+        spread = spread_of(mean, std)
+        z = (current - mean) / spread
         result.update(
             mean=round(mean, 2),
             std=round(std, 2),
+            spread=round(spread, 2),
             z=round(z, 2),
             ratio=round(current / mean, 2) if mean > 0 else None,
             status="spike" if z >= SPIKE_Z else "elevated" if z >= ELEVATED_Z else "normal",

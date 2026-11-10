@@ -97,6 +97,27 @@ def test_std_floor_stops_tiny_counts_looking_huge():
     assert r["status"] == "spike"
 
 
+def test_small_steady_counts_need_more_than_a_small_bump():
+    # Regression for WMT on 2026-11-09: usually 6 or 7 headlines, today 11.
+    # The days happened to be steady (std 0.5), so dividing by std (or by the
+    # 1.0 floor) gave z = 4.4, a "spike". By luck alone a count around 6.5
+    # swings by about sqrt(6.5) = 2.5, so 11 is only z = 1.7.
+    ks = weekdays_back(10)
+    r = score(times_for({0: 11, **{k: 6 + i % 2 for i, k in enumerate(ks)}}), NOW)
+    assert r["std"] == pytest.approx(0.53, abs=0.01)
+    assert r["spread"] == pytest.approx(6.5 ** 0.5, abs=0.01)
+    assert r["status"] == "elevated"
+
+
+def test_busy_stocks_real_spike_is_unchanged_by_the_sqrt_floor():
+    # Busy stocks wobble more than sqrt(mean) anyway, so their z doesn't move.
+    ks = weekdays_back(10)
+    usual = [20, 40, 25, 35, 30, 22, 38, 28, 32, 30]   # mean 30, std 6.6 > sqrt(30) = 5.5
+    r = score(times_for({0: 60, **dict(zip(ks, usual))}), NOW)
+    assert r["spread"] == r["std"]
+    assert r["status"] == "spike"
+
+
 def test_building_below_min_baseline():
     k1, k2 = weekdays_back(2)
     missing = set(range(1, stats.CHART_DAYS)) - {k1, k2}
@@ -136,7 +157,7 @@ def test_no_score_if_today_is_missing():
 
 def test_output_keys_unchanged_for_app_js():
     r = score([], NOW)
-    assert set(r) == {"current", "baseline_days", "mean", "std", "z", "ratio", "status", "early", "capped", "series"}
+    assert set(r) == {"current", "baseline_days", "mean", "std", "spread", "z", "ratio", "status", "early", "capped", "series"}
     assert set(r["series"][0]) == {"end", "count", "covered", "baseline"}
     assert len(r["series"]) == stats.CHART_DAYS
 
