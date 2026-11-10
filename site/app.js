@@ -19,6 +19,9 @@
   const fmtRatio = (r) => (r >= 10 ? Math.round(r) : r.toFixed(1)).toString();
   const LABEL = { spike: "Spike", elevated: "Elevated", normal: "Normal", building: "Too new to score" };
   // A stock whose usual level hit Google's 100-result cap has no fair score (see stats.py).
+  // The number z divides by. stats.py sends it as "spread" (std, but never
+  // below sqrt(mean)); data files from before that change only have std.
+  const spreadOf = (t) => t.spread ?? Math.max(t.std || 0, 1);
   const labelOf = (t) => (t.capped && t.z == null ? "Too busy to score" : LABEL[t.status]);
   const ICON = {
     spike: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5 11 10H1z"/></svg>',
@@ -132,7 +135,7 @@
     const series = t.series.slice(-Math.min(t.series.length, t.mode === "live" ? 15 : 30));
     const n = series.length, iw = W - m.l - m.r, ih = H - m.t - m.b;
     const step = iw / n, bw = Math.max(3, step - 3);
-    const has = t.mean != null, swing = Math.max(t.std || 0, 1);
+    const has = t.mean != null, swing = spreadOf(t);
     const hi = has ? t.mean + 2 * swing : 0, lo = has ? Math.max(0, t.mean - 2 * swing) : 0;
     const raw = Math.max(4, hi, ...series.map((p) => p.count));
     const tick = niceStep(raw / 3), yMax = Math.ceil(raw / tick) * tick;
@@ -188,8 +191,8 @@
     const summary = t.z == null
       ? t.capped ? `<b>${plural(t.current, "headline")}</b> today so far (Pacific time). Some earlier days hit Google's limit of 100 results per search, so the usual level is unknown and there's no fair score.`
       : `<b>${plural(t.current, "headline")}</b> today so far (Pacific time). It needs ${plural(Math.max(need, 1), "more day")} of history before today can be compared with normal.`
-      : `<b>${plural(t.current, "headline")}</b> today so far (Pacific time). By this time of day on ${t.baseline_days} comparable days before, it averaged <b>${t.mean.toFixed(1)}</b>, give or take ${t.std.toFixed(1)}.`;
-    const swing = Math.max(t.std || 0, 1);
+      : `<b>${plural(t.current, "headline")}</b> today so far (Pacific time). By this time of day on ${t.baseline_days} comparable days before, it averaged <b>${t.mean.toFixed(1)}</b>, give or take ${spreadOf(t).toFixed(1)}.`;
+    const swing = spreadOf(t);
     const math = t.z == null ? "" :
       `<div class="math"><span>z =</span><span class="frac"><span>${t.current} − ${t.mean.toFixed(1)}</span><span>${swing.toFixed(1)}</span></span><span>= <b>${fmtZ(t.z)}</b></span><span>${t.z >= 2 ? "Above 2, so it counts as a spike." : t.z >= 1 ? "Between 1 and 2: busier than usual, not a spike." : "Inside the usual range."}</span></div>`;
     const news = t.headlines.length
@@ -313,7 +316,7 @@
   const STEPS = [
     { title: "Collect headlines", text: "Every hour, and whenever someone runs a search, it pulls recent stories from Google News and Yahoo Finance.", file: "fetch.py", fn: "fetch_feed" },
     { title: "Remove repeats", text: "One story syndicated to ten sites should count once, so titles are reduced to a simple key and duplicates are dropped.", file: "extract.py", fn: "headline_key" },
-    { title: "Spot the company", text: "Each headline is checked for the symbol and the names papers actually use, so “Nvidia” and “(NVDA)” count, but words like AI or CEO don't.", file: "extract.py", fn: "pattern_for" },
+    { title: "Spot the company", text: "Each headline is checked for the symbol and the names papers actually use, so “Nvidia” and “(NVDA)” count, but words like AI or CEO don't. A bank's analysts rating other companies (“JPMorgan downgrades Nike”) don't count for the bank.", file: "extract.py", fn: "matcher_for" },
     { title: "Score the surprise", text: "Mentions are counted per day. Today so far is compared with the same hours on the 14 days before (weekdays with weekdays) to get a z-score.", file: "stats.py", fn: "score" },
   ];
   const codeCache = {};
@@ -480,7 +483,7 @@
 
     await ui.set(3, "done", t.z == null ? (t.capped ? "Too busy to score" : "Too new to score") : `z = ${fmtZ(t.z)}`,
       t.z == null ? `<p>There are fewer than 3 comparable days with coverage, so there's no reliable "usual" to compare against.</p>`
-        : `<p>Today so far: <b>${t.current}</b>. Usual by this time of day: <b>${t.mean.toFixed(1)}</b>, give or take <b>${t.std.toFixed(1)}</b>.</p><p>z = (${t.current} − ${t.mean.toFixed(1)}) ÷ ${Math.max(t.std, 1).toFixed(1)} = <b>${fmtZ(t.z)}</b>. ${t.z >= 2 ? "Above 2, so it's a spike." : "Below 2, so not a spike."}</p>`,
+        : `<p>Today so far: <b>${t.current}</b>. Usual by this time of day: <b>${t.mean.toFixed(1)}</b>, give or take <b>${spreadOf(t).toFixed(1)}</b>.</p><p>z = (${t.current} − ${t.mean.toFixed(1)}) ÷ ${spreadOf(t).toFixed(1)} = <b>${fmtZ(t.z)}</b>. ${t.z >= 2 ? "Above 2, so it's a spike." : "Below 2, so not a spike."}</p>`,
       t.status === "spike" ? "spike" : "");
     showResult(t);
   }
@@ -492,7 +495,7 @@
     await ui.set(0, "done", plural(DATA.totals.headlines, "headline"), `${note}<p>Collected from ${DATA.totals.sources} publishers over the past few weeks.</p>`);
     await ui.set(1, "done", "Already unique", `${note}<p>Duplicates are dropped as the headlines are stored.</p>`);
     await ui.set(2, "done", `${total.toLocaleString()} name ${t.name}`, `<p>Headlines in the last 15 days that name ${esc(t.name)} or its symbol.</p>`);
-    await ui.set(3, "done", t.z == null ? "Too new to score" : `z = ${fmtZ(t.z)}`, t.z == null ? "" : `<p>z = (${t.current} − ${t.mean.toFixed(1)}) ÷ ${Math.max(t.std, 1).toFixed(1)} = <b>${fmtZ(t.z)}</b>.</p>`, t.status === "spike" ? "spike" : "");
+    await ui.set(3, "done", t.z == null ? "Too new to score" : `z = ${fmtZ(t.z)}`, t.z == null ? "" : `<p>z = (${t.current} − ${t.mean.toFixed(1)}) ÷ ${spreadOf(t).toFixed(1)} = <b>${fmtZ(t.z)}</b>.</p>`, t.status === "spike" ? "spike" : "");
     showResult(t);
   }
 
