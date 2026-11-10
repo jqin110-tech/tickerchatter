@@ -39,3 +39,12 @@ def test_live_ignores_items_outside_their_search_day():
 def test_live_flags_capped_baseline():
     r = run(worker_items({**{k: 20 for k in range(15)}, 2: 100}))  # k=2 is Monday; a capped Sunday would not matter on a Wednesday
     assert r["capped"] is True and r["z"] is None
+
+
+def test_live_duplicate_headlines_count_once():
+    # live.py removes repeats with its own code, so it needs its own test.
+    items = worker_items({k: 20 for k in range(15)})
+    # Same words, other capitals and punctuation (still naming "Micron", so
+    # they'd count if the duplicate check didn't catch them).
+    repeats = [dict(items[0], title=items[0]["title"].replace("news", "NEWS") + "!" * i) for i in range(1, 6)]
+    assert run(items + repeats)["current"] == run(items)["current"]
