@@ -35,6 +35,7 @@ from .tickers import BY_SYMBOL, WATCHLIST
 GOOGLE_CAP = 100  # same as fetch.GOOGLE_CAP; not imported so --offline runs without requests installed
 ROOT = Path(__file__).resolve().parent.parent
 STORE = ROOT / "data" / "headlines.json"
+RUNS_LOG = ROOT / "data" / "runs.jsonl"  # one line per run, read by pipeline/report.py
 SITE_DATA = ROOT / "site" / "data"
 SITE_PY = ROOT / "site" / "py" / "pipeline"
 # live.py and its imports run in the browser; fetch.py is copied so the site can show its code.
@@ -44,7 +45,8 @@ KEEP_DAYS = 45
 # (extract.py). Days counted under an older rule get searched again, so
 # today and the baseline are always counted the same way. 2 = research
 # notes no longer count for JPMorgan, Goldman Sachs and Bank of America.
-COUNT_RULES = 2
+# 3 = fund-holding filings ("$AAPL Shares Sold by X LLC") no longer count.
+COUNT_RULES = 3
 
 
 def load_store() -> dict:
@@ -239,6 +241,32 @@ def build_output(store: dict, now: datetime) -> dict:
     }
 
 
+def run_summary(output: dict, now: datetime) -> dict:
+    """One line for the run log: how many stocks had each status, and which spiked.
+
+    Kept so the share of flagged stocks can be measured over weeks (see
+    pipeline/report.py) instead of guessed from whatever the site shows now.
+    """
+    tickers = output["tickers"]
+    statuses = {}
+    for t in tickers:
+        statuses[t["status"]] = statuses.get(t["status"], 0) + 1
+    return {
+        "at": now.isoformat(timespec="minutes"),
+        "pacific_day": pacific_today(now).isoformat(),
+        "scored": sum(1 for t in tickers if t["z"] is not None),
+        "statuses": statuses,
+        "spikes": [{"symbol": t["symbol"], "z": t["z"], "current": t["current"], "mean": t["mean"]}
+                   for t in tickers if t["status"] == "spike"],
+    }
+
+
+def append_run_log(line: dict) -> None:
+    RUNS_LOG.parent.mkdir(parents=True, exist_ok=True)
+    with RUNS_LOG.open("a") as f:
+        f.write(json.dumps(line) + "\n")
+
+
 def publish(output: dict) -> None:
     SITE_DATA.mkdir(parents=True, exist_ok=True)
     text = json.dumps(output, separators=(",", ":"))
@@ -282,6 +310,8 @@ def main() -> None:
 
     output = build_output(store, now)
     publish(output)
+    if not args.offline:
+        append_run_log(run_summary(output, now))
     spikes = [t for t in output["tickers"] if t["status"] == "spike"]
     print(f"Wrote site/data/latest.json. Spikes ({len(spikes)}/{len(WATCHLIST)}): {', '.join(t['symbol'] for t in spikes) or 'none'}")
 

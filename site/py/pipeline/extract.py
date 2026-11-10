@@ -80,6 +80,28 @@ def research_note_pattern(t: dict) -> re.Pattern | None:
     return re.compile(rf"{as_subject}|{quoted}|^{as_source}")
 
 
+# Fund-holding filings: "Apple Inc. $AAPL Shares Sold by Seamount Financial
+# Group". Sites generate one per fund per stock from quarterly regulatory
+# filings (13F), weeks after the trades, so they track the filing calendar,
+# not news. Around the mid-November deadline they grew from ~2% to 7% of all
+# headlines, enough to make a stock look like it was spiking. A headline is
+# one only if it has all three parts: a cashtag ($AAPL), a holdings word and
+# a buy/sell verb. Real journalism rarely puts a cashtag in a headline, so
+# "Berkshire sells stake in Bank of America" still counts.
+_CASHTAG = re.compile(r"\$[A-Z]{1,5}(?:\.[A-Z])?\b")
+_HOLDING = re.compile(r"\b(?:shares?|stock|stake|position|holdings|investment)\b", re.I)
+_TRADE = re.compile(
+    r"\b(?:sold|bought|purchased|acquired|raised|lowered|lessened|trimmed|boosted|cut|"
+    r"increased|decreased|reduced|grown|added|lifted|opened|sells|buys|acquires|purchases|"
+    r"trims|boosts|cuts|raises|lowers|increases|decreases|reduces|grows|lifts|makes new|takes)\b",
+    re.I,
+)
+
+
+def is_fund_filing(headline: str) -> bool:
+    return bool(_CASHTAG.search(headline) and _HOLDING.search(headline) and _TRADE.search(headline))
+
+
 def own_symbol_pattern(t: dict) -> re.Pattern | None:
     """"Bank of America (NYSE:BAC)" or "$BAC": the headline is about the bank itself."""
     if not t.get("symbol"):
@@ -92,14 +114,15 @@ def own_symbol_pattern(t: dict) -> re.Pattern | None:
 def matcher_for(t: dict) -> Callable[[str], bool]:
     """Does a headline count as news about company t?
 
-    It has to name the company. For research banks it also must not be
-    one of their analysts talking about another company, unless the bank's
-    own symbol is written out, which means the story is about the bank.
+    It has to name the company and not be a fund-holding filing. For research
+    banks it also must not be one of their analysts talking about another
+    company, unless the bank's own symbol is written out, which means the
+    story is about the bank.
     """
     names, note, own = pattern_for(t), research_note_pattern(t), own_symbol_pattern(t)
 
     def matches(headline: str) -> bool:
-        if not names.search(headline):
+        if not names.search(headline) or is_fund_filing(headline):
             return False
         if note and note.search(headline):
             return bool(own and own.search(headline))

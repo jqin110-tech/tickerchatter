@@ -1,5 +1,5 @@
 """Tests for pipeline/extract.py: which headlines count for which company."""
-from pipeline.extract import find_tickers, mentions
+from pipeline.extract import find_tickers, is_fund_filing, mentions
 
 
 def test_symbol_in_brackets_or_cashtag_counts():
@@ -44,3 +44,25 @@ def test_news_about_the_bank_itself_still_counts():
 def test_other_companies_dont_get_the_bank_filter():
     # "Nvidia says" is Nvidia talking about itself, which is news about Nvidia.
     assert mentions("Nvidia says demand for Blackwell chips is sold out", "NVDA")
+
+
+def test_fund_holding_filings_dont_count():
+    # Generated from quarterly filings, weeks after the trades: not news.
+    for headline in [
+        "Apple Inc. $AAPL Shares Sold by Seamount Financial Group Inc.",
+        "WestEnd Advisors LLC Sells 6,035 Shares of JPMorgan Chase & Co. $JPM",
+        "Randolph Co Inc Makes New $36.52 Million Investment in Costco Wholesale Corporation $COST",
+        "Tesla, Inc. $TSLA Stock: Alps Advisors Inc. Cuts Holdings",
+        "Salesforce Inc. $CRM Position Lessened by AIA Group Ltd",
+    ]:
+        assert is_fund_filing(headline), headline
+        assert find_tickers(headline) == [], headline
+
+
+def test_real_news_with_trading_words_still_counts():
+    for headline, symbol in [
+        ("Berkshire Hathaway sells stake in Bank of America", "BAC"),   # news, no cashtag
+        ("PALANTIR ($PLTR) Releases Q3 2026 Earnings", "PLTR"),         # cashtag, but no holdings verb
+        ("Nvidia stock cut to Hold at Morningstar", "NVDA"),            # holdings verb, but no cashtag
+    ]:
+        assert mentions(headline, symbol), headline

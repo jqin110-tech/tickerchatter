@@ -20,3 +20,8 @@ node_modules/
 
 # Test cache
 .pytest_cache/
+
+# Collected data. On GitHub it lives on the "data" branch (see update.yml);
+# locally the pipeline writes it here.
+data/
+site/data/
