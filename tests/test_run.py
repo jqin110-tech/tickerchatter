@@ -79,3 +79,25 @@ def test_days_counted_under_an_older_rule_are_searched_again():
         del snap["rules"]   # saved before COUNT_RULES existed
     assert len(days_to_search(store, "NVDA", NOW)) == stats.CHART_DAYS
     assert score_ticker(store, "NVDA", NOW)["baseline_days"] == 0
+
+
+def test_duplicate_headlines_count_once():
+    # One story syndicated to several sites, with different capitals and
+    # punctuation, is one piece of news. Counting it three times would let
+    # syndication alone make a spike.
+    store = {"days": {}}
+    morning = datetime(2026, 11, 4, 9, 0, tzinfo=PST)
+    record_day(store, "NVDA", TODAY, [
+        item("Nvidia beats estimates!", morning),
+        item("NVIDIA beats estimates", morning + timedelta(minutes=5)),
+        item("Nvidia Beats Estimates.", morning + timedelta(minutes=9)),  # other capitals and dot: same story
+        item("Nvidia beats estimates again", morning),                   # different words: a new headline
+    ], NOW)
+    assert len(store["days"]["NVDA"][TODAY.isoformat()]["times"]) == 2
+
+
+def test_empty_store_is_building_not_normal():
+    # Never searched is "we don't know", not "searched and found nothing".
+    # Scoring it as a quiet normal day would hide that the data is missing.
+    r = score_ticker({"days": {}}, "NVDA", NOW)
+    assert r["status"] == "building" and r["baseline_days"] == 0 and r["z"] is None
