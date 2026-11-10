@@ -18,6 +18,8 @@
   const fmtZ = (z) => { const s = Math.abs(z).toFixed(1); return s === "0.0" ? s : (z > 0 ? "+" : "−") + s; };
   const fmtRatio = (r) => (r >= 10 ? Math.round(r) : r.toFixed(1)).toString();
   const LABEL = { spike: "Spike", elevated: "Elevated", normal: "Normal", building: "Too new to score" };
+  // A stock whose usual level hit Google's 100-result cap has no fair score (see stats.py).
+  const labelOf = (t) => (t.capped && t.z == null ? "Too busy to score" : LABEL[t.status]);
   const ICON = {
     spike: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5 11 10H1z"/></svg>',
     elevated: '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2 10 7H7.5v3h-3V7H2z"/></svg>',
@@ -160,11 +162,11 @@
     ann.textContent = `${now.count} today`; s.append(ann);
     [[0, "start"], [Math.floor(n / 2), "middle"], [n - 1, "end"]].forEach(([i, a]) => {
       const tx = svg("text", { x: a === "start" ? x(i) : a === "end" ? x(i) + bw : x(i) + bw / 2, y: H - 6, "text-anchor": a });
-      tx.textContent = i === n - 1 ? "Last 24h" : day(series[i].end); s.append(tx);
+      tx.textContent = i === n - 1 ? "Today" : day(series[i].end); s.append(tx);
     });
     series.forEach((p, i) => {
       const hit = svg("rect", { class: "hit", x: m.l + i * step, y: m.t, width: step, height: ih });
-      const label = i === n - 1 ? "Last 24 hours" : `24h ending ${day(p.end)}`;
+      const label = i === n - 1 ? "Today so far" : `${day(p.end)}, same hours`;
       const note = !p.covered ? "Before tracking started" : p.baseline ? "Used for the usual level" : "";
       hit.addEventListener("mousemove", (e) => { bars[i].classList.add("hl"); showTip(`<b>${label}</b><br>${p.covered ? plural(p.count, "headline") : "No data"}${note ? `<br>${note}` : ""}`, e.clientX, e.clientY); });
       hit.addEventListener("mouseleave", () => { bars[i].classList.remove("hl"); hideTip(); });
@@ -175,6 +177,7 @@
 
   /* ---------- detail view (run result and sheet) ---------- */
   function headline(t) {
+    if (t.z == null && t.capped) return `${esc(t.name)} is too busy to measure today.`;
     if (t.z == null) return `Not enough history for ${esc(t.name)} yet.`;
     if ((t.status === "spike" || t.status === "elevated") && t.ratio) return `${esc(t.name)} is in the news ${fmtRatio(t.ratio)}× more than usual.`;
     if (t.status === "spike" || t.status === "elevated") return `${esc(t.name)} went from near silence to ${plural(t.current, "headline")}.`;
@@ -183,8 +186,9 @@
   function renderDetail(t, host) {
     const need = (DATA?.thresholds?.min_baseline_days || 3) - (t.baseline_days || 0);
     const summary = t.z == null
-      ? `<b>${plural(t.current, "headline")}</b> in the last 24 hours. It needs ${plural(Math.max(need, 1), "more day")} of history before today can be compared with normal.`
-      : `<b>${plural(t.current, "headline")}</b> in the last 24 hours. Over the ${t.baseline_days} days before, it averaged <b>${t.mean.toFixed(1)}</b> a day, give or take ${t.std.toFixed(1)}.`;
+      ? t.capped ? `<b>${plural(t.current, "headline")}</b> today so far (Pacific time). Some earlier days hit Google's limit of 100 results per search, so the usual level is unknown and there's no fair score.`
+      : `<b>${plural(t.current, "headline")}</b> today so far (Pacific time). It needs ${plural(Math.max(need, 1), "more day")} of history before today can be compared with normal.`
+      : `<b>${plural(t.current, "headline")}</b> today so far (Pacific time). By this time of day on ${t.baseline_days} comparable days before, it averaged <b>${t.mean.toFixed(1)}</b>, give or take ${t.std.toFixed(1)}.`;
     const swing = Math.max(t.std || 0, 1);
     const math = t.z == null ? "" :
       `<div class="math"><span>z =</span><span class="frac"><span>${t.current} − ${t.mean.toFixed(1)}</span><span>${swing.toFixed(1)}</span></span><span>= <b>${fmtZ(t.z)}</b></span><span>${t.z >= 2 ? "Above 2, so it counts as a spike." : t.z >= 1 ? "Between 1 and 2: busier than usual, not a spike." : "Inside the usual range."}</span></div>`;
@@ -197,7 +201,7 @@
       (t.z != null && t.early ? `<span class="badge" title="Based on fewer than 7 days, so treat it as a first look">Early read, ${t.baseline_days} days</span>` : "");
     host.innerHTML =
       `<article class="detail">` +
-        `<div class="d-head"><div><h3 id="${host.id === "sheet-body" ? "sheet-title" : "detail-title"}">${headline(t)}</h3><p>${sym}${sector}${badge}</p></div><span class="pill ${t.status}">${ICON[t.status]}${LABEL[t.status]}</span></div>` +
+        `<div class="d-head"><div><h3 id="${host.id === "sheet-body" ? "sheet-title" : "detail-title"}">${headline(t)}</h3><p>${sym}${sector}${badge}</p></div><span class="pill ${t.status}">${ICON[t.status]}${labelOf(t)}</span></div>` +
         `<div><p class="d-summary">${summary}</p><div class="chart grow"></div>` +
           `<div class="legend"><span><i class="lg-base"></i>Days used for the usual level</span>${t.mean != null ? `<span><i class="lg-mean"></i>Usual level</span><span><i class="lg-band"></i>Normal range</span>` : ""}</div>${math}</div>` +
         `<div class="news"><h4>Latest headlines</h4>${news}</div>` +
@@ -241,7 +245,7 @@
     const spots = [[8, 6], [52, 0], [30, 30], [70, 34], [4, 60], [46, 66], [76, 74]];
     movers.slice(0, spots.length).forEach((t, i) => {
       const wrap = el("div", { class: "chip-float", style: `--x:${spots[i][0]}%;--y:${spots[i][1]}%;--t:${5.5 + (i % 3) * 1.3}s;--d:${(0.4 + i * 0.09).toFixed(2)}s` });
-      const zt = t.z == null ? "Too new" : `${t.status === "spike" ? "▲ " : ""}z ${fmtZ(t.z)}`;
+      const zt = t.z == null ? (t.capped ? "Too busy" : "Too new") : `${t.status === "spike" ? "▲ " : ""}z ${fmtZ(t.z)}`;
       const b = el("button", { type: "button", class: "chip bubble", style: `--d:${(0.4 + i * 0.09).toFixed(2)}s`, "aria-label": `Run ${t.name}` },
         `<b>${esc(t.symbol)}</b><small class="${t.status}">${esc(zt)}</small>`);
       b.addEventListener("click", () => run(t.name));
@@ -261,7 +265,7 @@
     const ZMIN = -2, ZMAX = 4, ZERO = ZMAX / (ZMAX - ZMIN);
     const plot = $("strip");
     DATA.tickers.forEach((t, i) => {
-      const b = el("button", { type: "button", class: `sbar ${t.status}`, style: `--i:${i}`, "aria-label": `${t.symbol}: ${LABEL[t.status]}` });
+      const b = el("button", { type: "button", class: `sbar ${t.status}`, style: `--i:${i}`, "aria-label": `${t.symbol}: ${labelOf(t)}` });
       const bar = el("i");
       let top, h, o = "bottom";
       if (t.z == null) { h = 0.07; top = ZERO - h; }
@@ -280,10 +284,10 @@
     const sorted = [...DATA.tickers].sort((a, b) => rank(b) - rank(a) || b.current - a.current);
     sorted.slice(0, 3).forEach((t, i) => {
       const card = el("button", { type: "button", class: "mover mask bubble", style: `--d:${0.08 * i}s` });
-      const line = t.z == null ? `${plural(t.current, "headline")} so far. Still building history.`
+      const line = t.z == null ? `${plural(t.current, "headline")} so far. ${t.capped ? "Too busy to score fairly." : "Still building history."}`
         : t.ratio && t.status !== "normal" ? `<strong>${fmtRatio(t.ratio)}×</strong> its usual coverage, ${plural(t.current, "headline")} today.`
         : `${plural(t.current, "headline")} today, about usual.`;
-      card.innerHTML = `<div class="top"><div><b>${esc(t.symbol)}</b> <span class="name">${esc(t.name)}</span></div><span class="pill ${t.status}">${ICON[t.status]}${LABEL[t.status]}</span></div><p class="big">${line}</p>`;
+      card.innerHTML = `<div class="top"><div><b>${esc(t.symbol)}</b> <span class="name">${esc(t.name)}</span></div><span class="pill ${t.status}">${ICON[t.status]}${labelOf(t)}</span></div><p class="big">${line}</p>`;
       card.append(sparkline(t, 300, 44));
       card.append(el("span", { class: "go" }, "Open details"));
       card.addEventListener("click", () => openSheet(t));
@@ -293,7 +297,7 @@
     const ul = $("list");
     sorted.forEach((t) => {
       const li = el("li");
-      const b = el("button", { type: "button", class: "bubble bubble-sm" }, `<b>${esc(t.symbol)}</b><span class="nm">${esc(t.name)}</span><span class="z ${t.status}">${t.z == null ? "Too new" : `z ${fmtZ(t.z)}`}</span>`);
+      const b = el("button", { type: "button", class: "bubble bubble-sm" }, `<b>${esc(t.symbol)}</b><span class="nm">${esc(t.name)}</span><span class="z ${t.status}">${t.z == null ? (t.capped ? "Too busy" : "Too new") : `z ${fmtZ(t.z)}`}</span>`);
       b.append(sparkline(t, 72, 22));
       b.addEventListener("click", () => openSheet(t));
       li.append(b); ul.append(li);
@@ -310,7 +314,7 @@
     { title: "Collect headlines", text: "Every hour, and whenever someone runs a search, it pulls recent stories from Google News and Yahoo Finance.", file: "fetch.py", fn: "fetch_feed" },
     { title: "Remove repeats", text: "One story syndicated to ten sites should count once, so titles are reduced to a simple key and duplicates are dropped.", file: "extract.py", fn: "headline_key" },
     { title: "Spot the company", text: "Each headline is checked for the symbol and the names papers actually use, so “Nvidia” and “(NVDA)” count, but words like AI or CEO don't.", file: "extract.py", fn: "pattern_for" },
-    { title: "Score the surprise", text: "Mentions are counted per 24 hours. The last day is compared with the 14 before it to get a z-score.", file: "stats.py", fn: "score" },
+    { title: "Score the surprise", text: "Mentions are counted per day. Today so far is compared with the same hours on the 14 days before (weekdays with weekdays) to get a z-score.", file: "stats.py", fn: "score" },
   ];
   const codeCache = {};
   async function pySource(file) {
@@ -457,7 +461,7 @@
     news.items.forEach((it) => (sources[it.source] = (sources[it.source] || 0) + 1));
     const topSources = Object.entries(sources).sort((a, b) => b[1] - a[1]).slice(0, 5);
     await ui.set(0, "done", plural(news.items.length, "headline"),
-      `<p>Ran <b>${news.feeds} searches</b>: one Google News search for each of the last ${news.days} days (each returns at most 100 stories), plus Yahoo Finance.${news.failed ? ` ${news.failed} didn't respond.` : ""}</p>` +
+      `<p>Ran <b>${news.feeds} searches</b>: one Google News search for each of the last ${news.days} days (each returns at most 100 stories).${news.failed ? ` ${news.failed} didn't respond.` : ""}</p>` +
       (topSources.length ? `<p>Most stories came from ${topSources.map(([s, n]) => `${esc(s)} (${n})`).join(", ")}.</p>` : ""));
 
     await ui.set(1, "busy", "Starting Python…");
@@ -474,9 +478,9 @@
       (match ? `<span class="ex">${esc(match)}</span>` : "") +
       (t.rejected_example ? `<span class="ex no">${esc(t.rejected_example)}</span>` : ""));
 
-    await ui.set(3, "done", t.z == null ? "Too new to score" : `z = ${fmtZ(t.z)}`,
-      t.z == null ? `<p>There are fewer than 5 days with coverage, so there's no reliable "usual" to compare against.</p>`
-        : `<p>Last 24 hours: <b>${t.current}</b>. Usual: <b>${t.mean.toFixed(1)}</b> a day, give or take <b>${t.std.toFixed(1)}</b>.</p><p>z = (${t.current} − ${t.mean.toFixed(1)}) ÷ ${Math.max(t.std, 1).toFixed(1)} = <b>${fmtZ(t.z)}</b>. ${t.z >= 2 ? "Above 2, so it's a spike." : "Below 2, so not a spike."}</p>`,
+    await ui.set(3, "done", t.z == null ? (t.capped ? "Too busy to score" : "Too new to score") : `z = ${fmtZ(t.z)}`,
+      t.z == null ? `<p>There are fewer than 3 comparable days with coverage, so there's no reliable "usual" to compare against.</p>`
+        : `<p>Today so far: <b>${t.current}</b>. Usual by this time of day: <b>${t.mean.toFixed(1)}</b>, give or take <b>${t.std.toFixed(1)}</b>.</p><p>z = (${t.current} − ${t.mean.toFixed(1)}) ÷ ${Math.max(t.std, 1).toFixed(1)} = <b>${fmtZ(t.z)}</b>. ${t.z >= 2 ? "Above 2, so it's a spike." : "Below 2, so not a spike."}</p>`,
       t.status === "spike" ? "spike" : "");
     showResult(t);
   }
@@ -487,7 +491,7 @@
     const note = `<p>Live search isn't switched on for this site yet, so this uses the headlines collected every hour.</p>`;
     await ui.set(0, "done", plural(DATA.totals.headlines, "headline"), `${note}<p>Collected from ${DATA.totals.sources} publishers over the past few weeks.</p>`);
     await ui.set(1, "done", "Already unique", `${note}<p>Duplicates are dropped as the headlines are stored.</p>`);
-    await ui.set(2, "done", `${total.toLocaleString()} name ${t.name}`, `<p>Headlines in the last 30 days that name ${esc(t.name)} or its symbol.</p>`);
+    await ui.set(2, "done", `${total.toLocaleString()} name ${t.name}`, `<p>Headlines in the last 15 days that name ${esc(t.name)} or its symbol.</p>`);
     await ui.set(3, "done", t.z == null ? "Too new to score" : `z = ${fmtZ(t.z)}`, t.z == null ? "" : `<p>z = (${t.current} − ${t.mean.toFixed(1)}) ÷ ${Math.max(t.std, 1).toFixed(1)} = <b>${fmtZ(t.z)}</b>.</p>`, t.status === "spike" ? "spike" : "");
     showResult(t);
   }

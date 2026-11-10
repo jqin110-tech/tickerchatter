@@ -9,8 +9,11 @@
    Everything else runs in the visitor's browser.
 
    To get counts for every day, it asks Google News once per day for the
-   last 15 days (each search returns at most 100 results), plus Yahoo
-   Finance for the symbol. Results are cached for 20 minutes. */
+   last 15 days. Days are California days, because that's how Google's
+   after:/before: dates work. Each item is tagged with the day its search
+   asked for, so the browser only counts it for that day. Every day gets
+   exactly one search with the same 100-result cap, so today isn't
+   counted differently from the past. Results are cached for 20 minutes. */
 
 const DAYS = 15;
 const CACHE_SECONDS = 1200;
@@ -36,17 +39,15 @@ export default {
     if (cached) return cached;
 
     const feeds = [];
-    const today = new Date();
+    const today = pacificDay(new Date());
+    const terms = symbol && symbol !== q.toUpperCase() ? `"${q}" OR "${symbol} stock"` : `"${q}"`;
     for (let d = 0; d < DAYS; d++) {
-      const after = isoDay(addDays(today, -d - 1));
-      const before = isoDay(addDays(today, -d + 1));
-      const terms = symbol && symbol !== q.toUpperCase() ? `"${q}" OR "${symbol} stock"` : `"${q}"`;
-      const search = encodeURIComponent(`${terms} after:${after} before:${before}`);
-      feeds.push(`https://news.google.com/rss/search?q=${search}&hl=en-US&gl=US&ceid=US:en`);
+      const day = addDays(today, -d);
+      const search = encodeURIComponent(`${terms} after:${day} before:${addDays(today, -d + 1)}`);
+      feeds.push({ url: `https://news.google.com/rss/search?q=${search}&hl=en-US&gl=US&ceid=US:en`, day });
     }
-    if (symbol) feeds.push(`https://feeds.finance.yahoo.com/rss/2.0/headline?s=${symbol}&region=US&lang=en-US`);
 
-    const results = await Promise.allSettled(feeds.map((f) => getFeed(f)));
+    const results = await Promise.allSettled(feeds.map((f) => getFeed(f.url).then((items) => items.map((i) => ({ ...i, day: f.day })))));
     const items = results.flatMap((r) => (r.status === "fulfilled" ? r.value : []));
     const failed = results.filter((r) => r.status === "rejected").length;
 
@@ -70,7 +71,7 @@ function parseRss(xml) {
     const title = decode(tag(block, "title"));
     const date = new Date(tag(block, "pubDate"));
     if (!title || isNaN(date)) continue;
-    const source = decode(tag(block, "source")) || "Yahoo Finance";
+    const source = decode(tag(block, "source")) || "Google News";
     items.push({
       title: source && title.endsWith(` - ${source}`) ? title.slice(0, -source.length - 3) : title,
       link: decode(tag(block, "link")),
@@ -90,5 +91,6 @@ function decode(s) {
   return s.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&#(\d+);/g, (_, n) => String.fromCharCode(n));
 }
 
-const addDays = (d, n) => new Date(d.getTime() + n * 86400000);
-const isoDay = (d) => d.toISOString().slice(0, 10);
+// Dates are "YYYY-MM-DD" strings. Noon UTC keeps the day from slipping.
+const addDays = (day, n) => new Date(Date.parse(`${day}T12:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
+const pacificDay = (date) => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles" }).format(date);
