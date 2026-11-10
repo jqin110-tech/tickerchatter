@@ -6,8 +6,7 @@ on:
   schedule:
     - cron: "17 * * * *"   # every hour at :17
   workflow_dispatch:        # adds a "Run workflow" button on GitHub
-  push:
-    branches: [main]
+  push:                     # every branch runs the tests; only main fetches and deploys
 
 permissions:
   contents: write
@@ -15,11 +14,27 @@ permissions:
   id-token: write
 
 concurrency:
-  group: tickerchatter
+  group: tickerchatter-${{ github.ref }}   # branch test runs don't wait behind the hourly job
   cancel-in-progress: false
 
 jobs:
+  # Runs first. If any test fails, nothing is fetched, committed or deployed,
+  # so a broken change can't publish wrong scores.
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: pip install -r requirements-dev.txt
+      - name: Run tests
+        run: python -m pytest -q
+
   update:
+    needs: test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

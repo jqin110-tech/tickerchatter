@@ -1,27 +1,38 @@
 """Run the whole pipeline once.
 
-    python -m pipeline.run                 normal run (last 2 days of news)
-    python -m pipeline.run --backfill      first run: pull 14 days to build history
-    python -m pipeline.run --offline       skip fetching, just recompute from saved headlines
+    python -m pipeline.run                 normal run (hourly)
+    python -m pipeline.run --backfill      search every day again from scratch
+    python -m pipeline.run --offline       skip fetching, just recompute from saved data
 
 Steps:
-  1. fetch    download headlines for every ticker
-  2. store    add new ones to data/headlines.json (duplicates skipped)
-  3. score    count mentions per 24h window and compute z-scores
+  1. fetch    one Google search per ticker per day that still needs one
+  2. store    keep what each day's search found, plus headlines to show
+  3. score    compare today so far with the same hours on earlier days
   4. publish  write site/data/latest.json for the website
+
+Which days need a search: today (it's still going), and any day that
+hasn't been searched since it ended. So the first run searches all 15
+days, and after that each hourly run only searches today, plus
+yesterday once after midnight. Every day ends up searched the same way:
+one search, after the day is over.
+
+Busy stocks: if any day's search hits Google's 100-result cap, that
+stock moves to the narrow query (see fetch.QUERIES) for good, and all
+15 days are searched again with it in the same run. A stock's window
+never mixes the two queries.
 """
 from __future__ import annotations
 
 import argparse
 import json
-import re
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from .extract import find_tickers, headline_key
-from .stats import score
+from .extract import find_tickers, headline_key, mentions
+from .stats import CHART_DAYS, pacific, pacific_today, score
 from .tickers import BY_SYMBOL, WATCHLIST
 
+GOOGLE_CAP = 100  # same as fetch.GOOGLE_CAP; not imported so --offline runs without requests installed
 ROOT = Path(__file__).resolve().parent.parent
 STORE = ROOT / "data" / "headlines.json"
 SITE_DATA = ROOT / "site" / "data"
@@ -32,9 +43,15 @@ KEEP_DAYS = 45
 
 
 def load_store() -> dict:
-    if STORE.exists():
-        return json.loads(STORE.read_text())
-    return {"first_seen": {}, "headlines": {}}
+    store = json.loads(STORE.read_text()) if STORE.exists() else {}
+    store.setdefault("headlines", {})
+    # Older stores counted from "headlines". "days" replaces that; if it's
+    # missing, the next run simply searches all 15 days again.
+    store.setdefault("days", {})
+    store.setdefault("tier", {})   # symbol -> "broad" or "narrow"
+    store.pop("tracking_since", None)
+    store.pop("first_seen", None)
+    return store
 
 
 def save_store(store: dict) -> None:
@@ -42,7 +59,59 @@ def save_store(store: dict) -> None:
     STORE.write_text(json.dumps(store, indent=1, sort_keys=True))
 
 
-def merge(store: dict, items: list[dict], now: datetime) -> int:
+def tier_of(store: dict, symbol: str) -> str:
+    return store.get("tier", {}).get(symbol, "broad")
+
+
+def days_to_search(store: dict, symbol: str, now: datetime, redo_all: bool = False) -> list[date]:
+    today = pacific_today(now)
+    tier = tier_of(store, symbol)
+    saved = store["days"].get(symbol, {})
+    need = []
+    for k in range(CHART_DAYS):
+        day = today - timedelta(days=k)
+        snap = saved.get(day.isoformat())
+        if redo_all or snap is None or not snap["complete"] or snap.get("tier", "broad") != tier:
+            need.append(day)
+    return need
+
+
+def needs_narrow(store: dict, symbol: str) -> bool:
+    """A broad-query stock with any capped day in its window."""
+    if tier_of(store, symbol) != "broad":
+        return False
+    return any(snap["capped"] for snap in store["days"].get(symbol, {}).values())
+
+
+def record_day(store: dict, symbol: str, day: date, items: list[dict] | None, now: datetime,
+               tier: str = "broad") -> None:
+    """Save the publish times of this day's matching headlines.
+
+    The new search replaces the old one instead of adding to it. If we kept
+    adding, today (searched every hour) would collect far more than a past
+    day searched once, which is the bias this whole design avoids.
+    """
+    if items is None:
+        return  # failed search: keep whatever we had, or leave the day missing
+    times = {}
+    for item in items:
+        # Google's date filter is loose (about 1 in 5 results spill into the
+        # next or previous day). Only keep the ones really from this day.
+        published = datetime.fromisoformat(item["published"])
+        key = headline_key(item["title"])
+        if key and pacific(published).date() == day and mentions(item["title"], symbol):
+            times[key] = item["published"]
+    store["days"].setdefault(symbol, {})[day.isoformat()] = {
+        "searched_at": now.isoformat(timespec="seconds"),
+        "complete": pacific_today(now) > day,
+        "capped": len(items) >= GOOGLE_CAP,  # count is "at least this many"
+        "tier": tier,
+        "times": sorted(times.values()),
+    }
+
+
+def merge_headlines(store: dict, items: list[dict], now: datetime) -> int:
+    """Headlines shown on the site. They're not used for counting."""
     added = 0
     cutoff = now - timedelta(days=KEEP_DAYS)
     for item in items:
@@ -57,17 +126,61 @@ def merge(store: dict, items: list[dict], now: datetime) -> int:
             continue
         store["headlines"][key] = {**item, "tickers": tickers}
         added += 1
-        for symbol in tickers:
-            seen = store["first_seen"].get(symbol)
-            if seen is None or item["published"] < seen:
-                store["first_seen"][symbol] = item["published"]
 
-    # Drop headlines that are too old to matter.
     store["headlines"] = {
         k: v for k, v in store["headlines"].items()
         if datetime.fromisoformat(v["published"]) >= cutoff
     }
     return added
+
+
+def prune_days(store: dict, now: datetime) -> None:
+    oldest = (pacific_today(now) - timedelta(days=CHART_DAYS - 1)).isoformat()
+    for symbol, days in store["days"].items():
+        store["days"][symbol] = {d: v for d, v in days.items() if d >= oldest}
+
+
+def score_ticker(store: dict, symbol: str, now: datetime) -> dict:
+    saved = store["days"].get(symbol, {})
+    today = pacific_today(now)
+    tier = tier_of(store, symbol)
+    times, missing, capped = [], set(), set()
+    for k in range(CHART_DAYS):
+        snap = saved.get((today - timedelta(days=k)).isoformat())
+        if snap is None or snap.get("tier", "broad") != tier:
+            missing.add(k)
+            continue
+        times += [datetime.fromisoformat(t) for t in snap["times"]]
+        if snap["capped"]:
+            capped.add(k)
+    return score(times, now, missing, capped)
+
+
+def update(store: dict, now: datetime, fetch_days, redo_all: bool = False,
+           symbols: list[str] | None = None) -> tuple[list[dict], int]:
+    """Search what needs searching. Returns (fetched items, failed searches).
+
+    fetch_days is passed in so tests can hand it a fake Google.
+    """
+    prune_days(store, now)  # so only days still in the window can trigger a switch
+    shown, failed = [], 0
+    symbols = symbols or [t["symbol"] for t in WATCHLIST]
+    for attempt in range(2):  # second pass only for stocks that just moved to the narrow query
+        searches = [(BY_SYMBOL[s], day, tier_of(store, s))
+                    for s in symbols for day in days_to_search(store, s, now, redo_all and attempt == 0)]
+        if not searches:
+            break
+        print(f"Running {len(searches)} Google searches (one per ticker per day)...")
+        for t, day, tier, items in fetch_days(searches):
+            failed += items is None
+            record_day(store, t["symbol"], day, items, now, tier)
+            shown += items or []
+        symbols = [s for s in symbols if needs_narrow(store, s)]
+        for s in symbols:
+            store["tier"][s] = "narrow"
+        if symbols:
+            print(f"Too busy for the broad query, switching to narrow: {', '.join(symbols)}")
+    return shown, failed
 
 
 def build_output(store: dict, now: datetime) -> dict:
@@ -80,16 +193,12 @@ def build_output(store: dict, now: datetime) -> dict:
     tickers = []
     for symbol, heads in by_ticker.items():
         info = BY_SYMBOL[symbol]
-        times = [datetime.fromisoformat(h["published"]) for h in heads]
-        starts = [s for s in (store["first_seen"].get(symbol), store.get("tracking_since")) if s]
-        first = min(starts) if starts else None
-        stats = score(times, datetime.fromisoformat(first) if first else None, now)
         recent = sorted(heads, key=lambda h: h["published"], reverse=True)[:8]
         tickers.append({
             "symbol": symbol,
             "name": info["name"],
             "sector": info["sector"],
-            **stats,
+            **score_ticker(store, symbol, now),
             "headlines": [
                 {k: h[k] for k in ("title", "link", "source", "published")} for h in recent
             ],
@@ -134,7 +243,7 @@ def publish(output: dict) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the TickerChatter pipeline once.")
-    parser.add_argument("--backfill", action="store_true", help="pull 14 days of news")
+    parser.add_argument("--backfill", action="store_true", help="search every day again from scratch")
     parser.add_argument("--offline", action="store_true", help="don't fetch, just recompute")
     args = parser.parse_args()
 
@@ -143,17 +252,12 @@ def main() -> None:
     store = load_store()
 
     if not args.offline:
-        from .fetch import BACKFILL_DAYS, fetch_all  # only needed when actually fetching
-        backfill = args.backfill or first_run
-        print("Fetching 15 days of headlines (first run, about a minute)..." if backfill else "Fetching new headlines...")
-        items = fetch_all(WATCHLIST, backfill=backfill)
-        added = merge(store, items, now)
-        if backfill:
-            # Every day in the window was searched, so a quiet day really was quiet.
-            since = (now - timedelta(days=BACKFILL_DAYS)).isoformat(timespec="seconds")
-            store["tracking_since"] = min(store.get("tracking_since", since), since)
+        from .fetch import fetch_days, fetch_yahoo  # only needed when actually fetching
+        shown, failed = update(store, now, fetch_days, redo_all=args.backfill)
+        added = merge_headlines(store, shown + fetch_yahoo(WATCHLIST), now)
+        prune_days(store, now)
         save_store(store)
-        print(f"Added {added} new headlines ({len(store['headlines'])} stored).")
+        print(f"{failed} searches failed. Added {added} new headlines ({len(store['headlines'])} stored).")
     elif first_run:
         print("No headlines saved yet. Run without --offline first.")
         return
@@ -161,7 +265,7 @@ def main() -> None:
     output = build_output(store, now)
     publish(output)
     spikes = [t for t in output["tickers"] if t["status"] == "spike"]
-    print(f"Wrote site/data/latest.json. Spikes: {', '.join(t['symbol'] for t in spikes) or 'none'}")
+    print(f"Wrote site/data/latest.json. Spikes ({len(spikes)}/{len(WATCHLIST)}): {', '.join(t['symbol'] for t in spikes) or 'none'}")
 
 
 if __name__ == "__main__":
