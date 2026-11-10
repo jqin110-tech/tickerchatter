@@ -445,7 +445,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T08:40:15+00:00",
@@ -457,7 +457,8 @@
      "2026-11-10T15:07:34+00:00",
      "2026-11-10T16:36:46+00:00",
      "2026-11-10T16:54:13+00:00",
-     "2026-11-10T18:25:09+00:00"
+     "2026-11-10T18:25:09+00:00",
+     "2026-11-10T22:59:12+00:00"
     ]
    }
   },
@@ -652,7 +653,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T12:22:04+00:00",
@@ -1283,7 +1284,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T08:21:39+00:00",
@@ -1300,6 +1301,7 @@
      "2026-11-10T12:16:31+00:00",
      "2026-11-10T12:17:08+00:00",
      "2026-11-10T13:07:30+00:00",
+     "2026-11-10T14:30:14+00:00",
      "2026-11-10T14:35:30+00:00",
      "2026-11-10T14:56:00+00:00",
      "2026-11-10T15:12:48+00:00",
@@ -1682,7 +1684,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T12:03:04+00:00",
@@ -1697,7 +1699,8 @@
      "2026-11-10T17:33:47+00:00",
      "2026-11-10T17:44:05+00:00",
      "2026-11-10T18:21:18+00:00",
-     "2026-11-10T19:10:00+00:00"
+     "2026-11-10T19:10:00+00:00",
+     "2026-11-10T23:08:00+00:00"
     ]
    }
   },
@@ -1946,7 +1949,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T11:40:52+00:00",
@@ -2528,7 +2531,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:15:00+00:00",
@@ -2846,7 +2849,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T10:31:52+00:00",
@@ -3274,7 +3277,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:47:59+00:00",
@@ -3717,7 +3720,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:23:27+00:00",
@@ -3979,7 +3982,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T11:04:59+00:00",
@@ -4689,10 +4692,9 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
-     "2026-11-10T08:05:44+00:00",
      "2026-11-10T08:47:59+00:00",
      "2026-11-10T09:00:00+00:00",
      "2026-11-10T09:46:57+00:00",
@@ -4714,7 +4716,6 @@
      "2026-11-10T13:30:16+00:00",
      "2026-11-10T13:40:00+00:00",
      "2026-11-10T13:45:00+00:00",
-     "2026-11-10T13:47:19+00:00",
      "2026-11-10T14:02:00+00:00",
      "2026-11-10T14:45:26+00:00",
      "2026-11-10T14:54:15+00:00",
@@ -4732,7 +4733,7 @@
      "2026-11-10T17:59:00+00:00",
      "2026-11-10T18:09:41+00:00",
      "2026-11-10T18:18:00+00:00",
-     "2026-11-10T19:03:00+00:00",
+     "2026-11-10T19:03:02+00:00",
      "2026-11-10T19:06:02+00:00",
      "2026-11-10T19:11:20+00:00",
      "2026-11-10T19:40:00+00:00",
@@ -4749,8 +4750,8 @@
      "2026-11-10T21:21:39+00:00",
      "2026-11-10T21:23:15+00:00",
      "2026-11-10T21:25:27+00:00",
-     "2026-11-10T21:28:00+00:00",
      "2026-11-10T21:28:06+00:00",
+     "2026-11-10T21:28:27+00:00",
      "2026-11-10T21:29:05+00:00",
      "2026-11-10T21:35:15+00:00",
      "2026-11-10T21:37:10+00:00",
@@ -4767,7 +4768,8 @@
      "2026-11-10T22:27:41+00:00",
      "2026-11-10T22:37:45+00:00",
      "2026-11-10T22:41:15+00:00",
-     "2026-11-10T22:58:08+00:00"
+     "2026-11-10T22:58:08+00:00",
+     "2026-11-10T23:03:00+00:00"
     ]
    }
   },
@@ -5236,7 +5238,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:06:00+00:00",
@@ -5470,7 +5472,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T12:15:39+00:00",
@@ -5951,7 +5953,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:00:00+00:00",
@@ -5984,7 +5986,8 @@
      "2026-11-10T18:14:05+00:00",
      "2026-11-10T18:16:00+00:00",
      "2026-11-10T19:02:35+00:00",
-     "2026-11-10T21:17:27+00:00"
+     "2026-11-10T21:17:27+00:00",
+     "2026-11-10T22:15:09+00:00"
     ]
    }
   },
@@ -6183,10 +6186,11 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T13:35:10+00:00",
+     "2026-11-10T15:22:23+00:00",
      "2026-11-10T16:03:00+00:00",
      "2026-11-10T16:04:07+00:00",
      "2026-11-10T16:11:02+00:00"
@@ -6559,7 +6563,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T09:55:00+00:00",
@@ -6732,7 +6736,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T08:17:00+00:00",
@@ -7183,7 +7187,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T09:59:40+00:00",
@@ -7196,9 +7200,9 @@
      "2026-11-10T15:45:03+00:00",
      "2026-11-10T16:04:03+00:00",
      "2026-11-10T18:16:38+00:00",
+     "2026-11-10T18:35:15+00:00",
      "2026-11-10T19:34:09+00:00",
      "2026-11-10T20:05:07+00:00",
-     "2026-11-10T21:00:00+00:00",
      "2026-11-10T22:36:21+00:00"
     ]
    }
@@ -7354,7 +7358,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T15:41:42+00:00",
@@ -7790,7 +7794,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:22:55+00:00",
@@ -7806,7 +7810,7 @@
      "2026-11-10T14:45:00+00:00",
      "2026-11-10T15:54:02+00:00",
      "2026-11-10T15:59:43+00:00",
-     "2026-11-10T16:04:15+00:00",
+     "2026-11-10T16:04:54+00:00",
      "2026-11-10T16:12:31+00:00",
      "2026-11-10T16:17:54+00:00",
      "2026-11-10T16:53:35+00:00",
@@ -8041,7 +8045,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T11:43:38+00:00",
@@ -8443,7 +8447,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T08:47:59+00:00",
@@ -8789,7 +8793,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T09:38:41+00:00",
@@ -8798,9 +8802,9 @@
      "2026-11-10T13:06:24+00:00",
      "2026-11-10T14:01:20+00:00",
      "2026-11-10T14:02:27+00:00",
-     "2026-11-10T14:21:41+00:00",
      "2026-11-10T15:50:34+00:00",
      "2026-11-10T17:39:36+00:00",
+     "2026-11-10T17:53:00+00:00",
      "2026-11-10T18:00:11+00:00",
      "2026-11-10T18:04:33+00:00",
      "2026-11-10T18:36:00+00:00",
@@ -8808,9 +8812,10 @@
      "2026-11-10T19:13:00+00:00",
      "2026-11-10T19:17:09+00:00",
      "2026-11-10T19:20:57+00:00",
+     "2026-11-10T20:19:48+00:00",
      "2026-11-10T20:27:23+00:00",
      "2026-11-10T20:30:15+00:00",
-     "2026-11-10T21:25:06+00:00",
+     "2026-11-10T21:13:27+00:00",
      "2026-11-10T21:27:00+00:00",
      "2026-11-10T21:39:00+00:00"
     ]
@@ -9212,7 +9217,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T09:24:54+00:00",
@@ -9473,7 +9478,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T08:25:02+00:00",
@@ -9679,7 +9684,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T09:35:00+00:00",
@@ -10326,7 +10331,7 @@
     "capped": true,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T08:10:43+00:00",
@@ -10350,6 +10355,7 @@
      "2026-11-10T12:56:37+00:00",
      "2026-11-10T13:00:00+00:00",
      "2026-11-10T13:00:33+00:00",
+     "2026-11-10T13:03:45+00:00",
      "2026-11-10T13:27:37+00:00",
      "2026-11-10T13:30:00+00:00",
      "2026-11-10T13:36:00+00:00",
@@ -10369,10 +10375,10 @@
      "2026-11-10T16:38:32+00:00",
      "2026-11-10T16:43:04+00:00",
      "2026-11-10T17:00:51+00:00",
-     "2026-11-10T17:10:00+00:00",
      "2026-11-10T17:14:54+00:00",
      "2026-11-10T17:30:24+00:00",
      "2026-11-10T17:42:36+00:00",
+     "2026-11-10T17:54:47+00:00",
      "2026-11-10T17:56:32+00:00",
      "2026-11-10T18:00:00+00:00",
      "2026-11-10T18:01:56+00:00",
@@ -10409,10 +10415,9 @@
      "2026-11-10T22:07:56+00:00",
      "2026-11-10T22:08:00+00:00",
      "2026-11-10T22:13:47+00:00",
-     "2026-11-10T22:28:34+00:00",
      "2026-11-10T22:33:23+00:00",
      "2026-11-10T22:35:02+00:00",
-     "2026-11-10T23:00:01+00:00"
+     "2026-11-10T23:03:45+00:00"
     ]
    }
   },
@@ -10818,7 +10823,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T09:55:00+00:00",
@@ -11022,7 +11027,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T11:00:00+00:00",
@@ -11445,7 +11450,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T08:54:17+00:00",
@@ -12120,7 +12125,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:09:49+00:00",
@@ -12129,6 +12134,7 @@
      "2026-11-10T08:55:20+00:00",
      "2026-11-10T09:08:03+00:00",
      "2026-11-10T09:12:33+00:00",
+     "2026-11-10T09:17:09+00:00",
      "2026-11-10T10:00:00+00:00",
      "2026-11-10T10:17:24+00:00",
      "2026-11-10T10:20:55+00:00",
@@ -12180,7 +12186,6 @@
      "2026-11-10T19:32:59+00:00",
      "2026-11-10T20:23:13+00:00",
      "2026-11-10T20:28:48+00:00",
-     "2026-11-10T21:14:24+00:00",
      "2026-11-10T21:33:06+00:00",
      "2026-11-10T21:34:02+00:00",
      "2026-11-10T21:56:15+00:00",
@@ -12441,7 +12446,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T11:02:03+00:00",
@@ -12858,7 +12863,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T11:16:00+00:00",
@@ -13273,7 +13278,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:16:56+00:00",
@@ -13288,6 +13293,7 @@
      "2026-11-10T19:16:00+00:00",
      "2026-11-10T19:41:15+00:00",
      "2026-11-10T21:27:51+00:00",
+     "2026-11-10T21:37:02+00:00",
      "2026-11-10T21:37:02+00:00",
      "2026-11-10T21:45:03+00:00",
      "2026-11-10T22:19:52+00:00",
@@ -13761,7 +13767,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T10:48:28+00:00",
@@ -14305,7 +14311,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:44:06+00:00",
@@ -14389,7 +14395,8 @@
      "2026-11-10T22:07:36+00:00",
      "2026-11-10T22:33:27+00:00",
      "2026-11-10T22:49:48+00:00",
-     "2026-11-10T22:55:25+00:00"
+     "2026-11-10T22:55:25+00:00",
+     "2026-11-10T23:15:00+00:00"
     ]
    }
   },
@@ -14651,7 +14658,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T08:25:00+00:00",
@@ -14935,7 +14942,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T09:09:50+00:00",
@@ -15175,12 +15182,12 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "narrow",
     "times": [
      "2026-11-10T10:52:48+00:00",
      "2026-11-10T13:05:26+00:00",
-     "2026-11-10T14:34:09+00:00",
+     "2026-11-10T14:04:16+00:00",
      "2026-11-10T14:43:00+00:00",
      "2026-11-10T15:58:09+00:00",
      "2026-11-10T22:02:18+00:00"
@@ -15465,7 +15472,7 @@
     "capped": false,
     "complete": false,
     "rules": 2,
-    "searched_at": "2026-11-10T23:10:04+00:00",
+    "searched_at": "2026-11-10T23:22:09+00:00",
     "tier": "broad",
     "times": [
      "2026-11-10T08:36:42+00:00",
@@ -18957,6 +18964,16 @@
     "AAPL"
    ],
    "title": "4 Apple Watch Apps That Can Upgrade Your Daily Drive"
+  },
+  "4 costco kirkland signature items that have mixed reviews in 2026": {
+   "feed": "google-day",
+   "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOSnpjcy1TRXFfSnlZS2pMTGs2bkVfeWN1SUdBbjVsbVZxYjdYX0t4M2diN2twSUw2dTV3WUhmOUFpWlFENXJ4MjJWUUlubTZqUEJVNUM5RGg3cldWaTBkWS1YeExDZkZQZUJ1S1hMemxocExpUXhDOEI4RjQxeUZxOVl2NjVGQ0VjYmc?oc=5",
+   "published": "2026-11-10T23:03:00+00:00",
+   "source": "Mashed",
+   "tickers": [
+    "COST"
+   ],
+   "title": "4 Costco Kirkland Signature Items That Have Mixed Reviews In 2026"
   },
   "4 disney products we d buy even if we weren t going to disney world": {
    "feed": "google-day",
@@ -37884,6 +37901,16 @@
     "AMD"
    ],
    "title": "AMD 261030 900.00C (AMD261030C900000) Stock Community & Discussion"
+  },
+  "amd 261109 270 00c amd261109c270000 stock options chain quotes news": {
+   "feed": "google-day",
+   "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5GWERucTRNV1FVbVJDNHVEUFdyajYtNVlzYmVUTXVLbWNnV2swVXZmeHBIWGxPeGw2S1BYa3ZDbHM2ZGw5ekVwWVYtdkJsanJZa3Q3MGhKUGhEdTRPS21n?oc=5",
+   "published": "2026-11-10T14:30:14+00:00",
+   "source": "Moomoo",
+   "tickers": [
+    "AMD"
+   ],
+   "title": "AMD 261109 270.00C (AMD261109C270000) Stock Options Chain | Quotes & News"
   },
   "amd 261118 410 00p amd261118p410000 stock options chain quotes news": {
    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBpV0tnQjl1NEVFYXNTRGVCZDZUMldKT3JFR0k0WHM1Qk9sM3ZnZDBCbmZXdlhnMlZOY1dMeGpGVDh5MHpwdFUtOWNfWFFRWmlJRWJMMEktSDRoU0ot?oc=5",
@@ -80926,6 +80953,16 @@
    ],
    "title": "Costco Faces Sunday Shopping Crowds During Peak Hours"
   },
+  "costco gains after announcing its first special dividend in almost three years": {
+   "feed": "google-day",
+   "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPMW5fWE1WSmhjZkhVMC1GbUJGbEVpU0VqSkRaLXFPVy1rdHVWYmRXUFg0NU1SNzFZSDlCekExUWM3aVVCQlBXZ0JfVFdwcS11Q3V6bi1wUTVDNGcybTcxek9pVFdmOVhkYVc1U2FEUTBkcllnaU1VVkdVamwxU3pjRFgzb0ZCbDdLc0RTTnVyUTI1SDFqTFpGTXpvcHlSVVlfWjRYMlZsYm1FN25MRU1zM1BZUEhZLUFQdGVwamJGSDFUVGtxWFFYcmp3eGNSRU4tWjdtYkJaNGI?oc=5",
+   "published": "2026-11-10T21:28:27+00:00",
+   "source": "TradingView",
+   "tickers": [
+    "COST"
+   ],
+   "title": "Costco gains after announcing its first special dividend in almost three years"
+  },
   "costco gains after announcing its first special dividend in almost three years cost nasdaq": {
    "feed": "google-day",
    "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNNzNkc1pDQ3duTWpMajdNcDBRV3NEdnhlb1FRY3lvWC02WGtWVWpCdXRxV0JDWnFleUxaUktzMHpmWkZIclRPNWE5Vl9ySDg5aFhlalp6R1gzc2RCaG5hc0tMQUl4MWl0aDN4a3hGS2xSblVyOHplMjExSlhDTWd0cWhEMm5yZmt3N2tJdjZWenhzNm5pd1F3ZEtkdkw3ZU1ndXNySFUxRmFwR2QwVDY0bklYdExpMzg?oc=5",
@@ -91871,6 +91908,16 @@
     "DIS"
    ],
    "title": "Disney Stock Hits a Fresh 52-Week High at $118.95, Up 3.45%"
+  },
+  "disney stock may move 5 5 on nov 17 earnings report": {
+   "feed": "google-day",
+   "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOS3VqV00yYndfc19jcDBNVm5xc05rbTVKY3VJVjlmbGoyZ21lWVFoZVpIbUZEVEQzQVRmcERDVkNOX0RfZDNMMHI0ZmdXRUJKZHI0dGhyMXBvOHlaUXE3UzEwN2xtM0pDbHVyakVPQ2JwY25xWVliUXpVU3pDWDhVaGdNOG5xVDBZUEF5cm4wdnF5MXpTc0RQdjNuTzB4S255eXV4VlBLbzhhUlFUOTg4cjJB?oc=5",
+   "published": "2026-11-10T15:22:23+00:00",
+   "source": "Investing.com",
+   "tickers": [
+    "DIS"
+   ],
+   "title": "Disney stock may move 5.5% on Nov. 17 earnings report"
   },
   "disney stock may move 5 5 on nov 17 earnings report by investing com": {
    "feed": "google-day",
@@ -203657,6 +203704,16 @@
    ],
    "title": "Serverless MCP server for AI agent data lake access on Amazon ECS Fargate | Amazon Web Services"
   },
+  "service shapes leaders chevron veterans share lessons": {
+   "feed": "google-day",
+   "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOcGhoYkNIMkdBcXdvYmFtZVRCOW9BQVBhNFU2ZHloZU5Fdl9QdW1pbUh0WHdReVhicVc3dENReHFlcVF5eVBCOWpGeWMyR1pfanRRZDRwSVNCbFdaWmZyWHM5YkoyLW5MMmNzQWxQT1RDeEFscndrRHBOQXRsUjgwREl3RlNtUXRrdFc5VlJVeVZORjEyWjhncFJR?oc=5",
+   "published": "2026-11-10T22:15:09+00:00",
+   "source": "Chevron",
+   "tickers": [
+    "CVX"
+   ],
+   "title": "Service shapes leaders: Chevron veterans share lessons"
+  },
   "servicenow and snowflake are using ai agents at scale here s what they learned": {
    "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNa0M4ZFhfU2tCcU1oQTYwZ3c4MVlWLXZLZGR0aW96eHNTZTVEMWphUWdiWERTQVl2SURMSFFSTk5sY0NSdGFhR1VuQ0lZcC1NY3BpY1JUcjBVUnJLdlMyejBocnZHdV9KNEJfRkxjdHJwOVU4Y01ZbGJWRXZXVWFqbXVJXy1vQ19Obm1IRDRtaVlRZEU2N1lIM3k5aTBvQVU5UlFTZzYxZFhwTWVPS0pOMi1fSTVoQnc?oc=5",
    "published": "2026-11-09T17:10:36+00:00",
@@ -203908,6 +203965,16 @@
     "TSLA"
    ],
    "title": "Shares of Tesla and SpaceX fall after Elon Musk's midterm election bet backfires"
+  },
+  "sharesies grows revenue feature adoption 56 with snowflake cowork": {
+   "feed": "google-day",
+   "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE9iTjdtX3o2b25IYk9TMGpXV1BVQWluc3dFODJSZEw3anBrakhTalBXbzJHSFNUVXc5MWJnYlJpNWFPeS1fZEdxeE1NcFNyazhIcFh2VFBwNzdncmRNYU1ib2JRZllYZ0VHSng3cU55X09lNzhGNlpqMk5LaHA?oc=5",
+   "published": "2026-11-10T21:37:02+00:00",
+   "source": "Snowflake",
+   "tickers": [
+    "SNOW"
+   ],
+   "title": "Sharesies Grows Revenue Feature Adoption 56% with Snowflake CoWork"
   },
   "shari rosenblum disney tv studios pr lead exits the company": {
    "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNVXdrMHhRaEZWSGVBTlhTQnVUVFdncldyalFFM0lZM0RWdmFVdjhsSXFaRFNlTU9qX1B2aHNicFY1ZTQtWGY3UjBzd3NfVWpGQmJaUjhWYnZQTXYyT0gzMXdBV2FmcU5QeXJ2NmYwb3VlTlh2NEh6NFhUS0hSelN3SDFNTjV1VU91T2tJOXdR?oc=5",
@@ -214337,6 +214404,16 @@
     "INTC"
    ],
    "title": "Stock Market Dives As Intel Craters, Triggers This Shift; Midterms, Jobs Report Due"
+  },
+  "stock market drops on hot inflation data rate hike fears amazon rides relative strength toward entry": {
+   "feed": "google-day",
+   "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPRTB2NlAzdzVJTGx6WExMdTgzME9VdWFFdlVxTk9aRXNlNC0tQXdkbTdIUzh1aEN6anJkMjA5YU1RMjcxeVVzd0Q1Rnlsa2wtNy1yUUVSUUNhZDFKLWc3WEw1dS1OY3VOenFKT1ZjY2h5dXJPNDB1S2IzMElmVVVIYnl4aDZpSnhtSlVlWnQxOWx5ZTJId2pnYVZHM3hjNXdJSWtj?oc=5",
+   "published": "2026-11-10T23:08:00+00:00",
+   "source": "Investor's Business Daily",
+   "tickers": [
+    "AMZN"
+   ],
+   "title": "Stock Market Drops On Hot Inflation Data, Rate-Hike Fears; Amazon Rides Relative Strength Toward Entry"
   },
   "stock market forecast goldman sachs jpmorgan morgan stanley predict what s next after tech selloff": {
    "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPZHNGdmc1ckFLM21oaWlWLXdQQmdaUEVmUWViOWtSR05hajMtUzc4UzVsR1pRUmYzSzU2ZnVMaEw0X1hyOVJnWXZyYjU4ZG9lYkdWQkw5WGhVckptcEEwSkdJZ3pIZVJJTnZUbXVQMjhYc0R2cXc4ZW5GQUtTb1FtTlZOaEtWc09pQ05qcGI0M3Z4NlRqVlgtOE5MMTV3UGR6YWdkWUltc0R6OVJDMlJUaFg2X2pzYWhIZ08zRVo0YWNadw?oc=5",
@@ -234284,6 +234361,17 @@
     "TSM"
    ],
    "title": "TSMC Makes the Chips for Both Nvidia and AMD. Here's What a $5,000 Investment Could Be Worth by 2030."
+  },
+  "tsmc microsoft executives debate ai s impact on day 2 of nikkei dialogue": {
+   "feed": "google-day",
+   "link": "https://news.google.com/rss/articles/CBMi-AFBVV95cUxNekJsR0FLY0FRek5NZnFjeEtIczZvY2ZoWVhtNVlHZjFScmJqVVlMTm9OQUJsMTZIcHdYRjFHTFJXSmFyWnRsdUdTNUVPWlhIRGVjNTlVZFlXWHQwRDhaNEtBQllDQ1AtWDRLUG9uQjV2WXpSUU1CMzdyOHZfbnJyT2xtNXBhOFBlVmxHX0NqSEdheFRRTGZ1d20yLWNJUC1IT3NvM0pLekJJdXhDWGZ0YTh4RWptNU9uQVozWU1uZloxc3I2ZFg5Sl9EamN0OEtyLUVpZVlwNGxTeUl6YnBPU2hhdkw4OE14S0YyLTh6NTBibWlZa2w3WQ?oc=5",
+   "published": "2026-11-10T23:15:00+00:00",
+   "source": "Nikkei Asia",
+   "tickers": [
+    "TSM",
+    "MSFT"
+   ],
+   "title": "TSMC, Microsoft executives debate AI's impact on Day 2 of Nikkei Dialogue"
   },
   "tsmc mulls expanding into advanced memory chip production": {
    "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNZGtJOXhHNmRyTWhpc24zbXNMWlFXY3BKRGdRTHQ1aE5wcF9JZzM1NW4wZF9aSXk4MVZjZWgxOVhfazJJelFvYXcwZkxRNnFKdk9wUld5R2M0Y2piclZNZTVrWEhxMXB4X2NKbWVFd3ZzSFNBUWJOYmR4Y2xqalotX0l3azVJanJXckJFa1A2aVVIRUtCVDFTRThlNjZrMGxxS09GQi1HOGo2TnBTTzdJ?oc=5",
