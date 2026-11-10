@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta, timezone
 
 from pipeline import stats
-from pipeline.run import days_to_search, needs_narrow, record_day
+from pipeline.run import days_to_search, needs_narrow, record_day, score_ticker
 from pipeline.stats import pacific_today
 
 PST = timezone(timedelta(hours=-8))
@@ -69,3 +69,13 @@ def test_capped_stock_moves_to_narrow_query_and_redoes_every_day():
     assert needs_narrow(store, "NVDA")
     store["tier"]["NVDA"] = "narrow"
     assert len(days_to_search(store, "NVDA", NOW)) == stats.CHART_DAYS  # nothing mixes the two queries
+
+
+def test_days_counted_under_an_older_rule_are_searched_again():
+    # When extract.py's counting rule changes, an old day's count can't be
+    # compared with a new today. It's treated as missing until searched again.
+    store = full_store()
+    for snap in store["days"]["NVDA"].values():
+        del snap["rules"]   # saved before COUNT_RULES existed
+    assert len(days_to_search(store, "NVDA", NOW)) == stats.CHART_DAYS
+    assert score_ticker(store, "NVDA", NOW)["baseline_days"] == 0
