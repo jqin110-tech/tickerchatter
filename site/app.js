@@ -81,10 +81,15 @@
   function updateFocus() {
     focusQueued = false;
     const vh = innerHeight;
+    const scrollLeft = Math.max(0, document.documentElement.scrollHeight - (scrollY + vh));
     for (const n of focusEls) {
       const top = n.getBoundingClientRect().top;
       // 0 when the top edge is at the bottom of the screen, 1 once it's 30% of the way up.
-      const p = Math.min(1, Math.max(0, (vh - top) / (vh * 0.3)));
+      // Things at the very end of the page (the footer) can't rise that far,
+      // so for them "sharp" is wherever they stop when the page is scrolled to the bottom.
+      const highest = top - scrollLeft;
+      const travel = Math.max(1, vh - Math.max(highest, vh * 0.7));
+      const p = Math.min(1, Math.max(0, (vh - top) / travel));
       n.style.filter = p >= 1 ? "none" : `blur(${((1 - p) * 14).toFixed(1)}px)`;
     }
   }
