@@ -118,6 +118,24 @@ def test_busy_stocks_real_spike_is_unchanged_by_the_sqrt_floor():
     assert r["status"] == "spike"
 
 
+def test_flat_ticker_scores_zero():
+    # Same number every day: today is exactly usual, so z = 0, not "a bit off".
+    ks = weekdays_back(10)
+    r = score(times_for({0: 10, **{k: 10 for k in ks}}), NOW)
+    assert r["mean"] == 10 and r["std"] == 0
+    assert r["z"] == 0 and r["status"] == "normal"
+
+
+def test_empty_input_with_coverage_is_a_quiet_normal_day():
+    # Searched every day and found nothing: a real, quiet day. Mean 0 and
+    # std 0 must not divide by zero (the floor makes the spread 1), and the
+    # ratio today/usual has no meaning, so it's None rather than a crash.
+    r = score([], NOW)
+    assert r["current"] == 0 and r["baseline_days"] == 10
+    assert r["z"] == 0 and r["status"] == "normal"
+    assert r["ratio"] is None
+
+
 def test_building_below_min_baseline():
     k1, k2 = weekdays_back(2)
     missing = set(range(1, stats.CHART_DAYS)) - {k1, k2}
