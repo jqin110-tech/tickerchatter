@@ -48,3 +48,13 @@ def test_browser_copy_matches_pipeline():
     #   python -c "from pipeline.run import copy_browser_code as c; c()"
     for name in BROWSER_FILES:
         assert (ROOT / "site/py/pipeline" / name).read_text() == (ROOT / "pipeline" / name).read_text(), name
+
+
+def test_hand_checks_file_is_well_formed():
+    # Rows are added by hand, so check them like data: a comma inside an
+    # unquoted reason shifts every column after it.
+    import csv
+    for row in csv.DictReader((ROOT / "eval/spike_checks.csv").open()):
+        assert None not in row and all(row.values()), row
+        assert row["verdict"] in {"real", "minor", "false"}, row
+        date.fromisoformat(row["day"])

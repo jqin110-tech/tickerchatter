@@ -59,6 +59,7 @@ jobs:
           if git fetch --quiet --depth=1 origin data; then
             git show FETCH_HEAD:headlines.json > data/headlines.json
             git show FETCH_HEAD:runs.jsonl > data/runs.jsonl 2>/dev/null || rm -f data/runs.jsonl
+            git show FETCH_HEAD:checks.json > data/checks.json 2>/dev/null || rm -f data/checks.json
           fi
 
       - name: Fetch headlines and score
@@ -69,6 +70,13 @@ jobs:
             python -m pipeline.run --backfill
           fi
 
+      # Looks for evidence behind each spike of the last week (price moves,
+      # one story across many publishers). Yahoo's price data is free but
+      # unofficial, so a failure here shouldn't stop the site from updating.
+      - name: Check spikes for news
+        continue-on-error: true
+        run: python -m pipeline.check --days 7 --today
+
       - name: Save data
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -77,7 +85,7 @@ jobs:
           git init --quiet --initial-branch=data
           git config user.name "tickerchatter-bot"
           git config user.email "tickerchatter-bot@users.noreply.github.com"
-          git add headlines.json runs.jsonl
+          git add headlines.json runs.jsonl $(ls checks.json 2>/dev/null)
           git commit --quiet -m "Saved data $(date -u +%Y-%m-%dT%H:%MZ)"
           git push --quiet --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" data
 

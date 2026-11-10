@@ -26,6 +26,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RUNS_LOG = ROOT / "data" / "runs.jsonl"
 CHECKS = ROOT / "eval" / "spike_checks.csv"
+AUTO_CHECKS = ROOT / "data" / "checks.json"   # written by pipeline/check.py
 
 
 def last_run_per_day(lines: list[dict]) -> dict[str, dict]:
@@ -44,6 +45,26 @@ def flagged_share(days: dict[str, dict]) -> tuple[int, int]:
 
 def verdict_counts(rows: list[dict]) -> Counter:
     return Counter(row["verdict"].strip().lower() for row in rows)
+
+
+def agreement(hand: list[dict], auto: list[dict]) -> tuple[int, int, list[str]]:
+    """How often check.py agrees with the hand checks: (agree, compared, disagreements).
+
+    "real" and "minor" should be "news found"; "false" should be "no news found".
+    """
+    auto_by = {(a["day"], a["symbol"]): a["verdict"] for a in auto}
+    agree, compared, misses = 0, 0, []
+    for row in hand:
+        found = auto_by.get((row["day"], row["symbol"]))
+        if found is None:
+            continue  # not a spike any more, or never checked automatically
+        compared += 1
+        expected = "no news found" if row["verdict"].strip().lower() == "false" else "news found"
+        if found == expected:
+            agree += 1
+        else:
+            misses.append(f"{row['day']} {row['symbol']}: hand {row['verdict']}, auto {found}")
+    return agree, compared, misses
 
 
 def main() -> None:
@@ -77,6 +98,21 @@ def main() -> None:
             print(f"    {verdict:<5} {counts.get(verdict, 0):>3}  ({counts.get(verdict, 0) / total:.0%})")
     else:
         print("  None checked yet.")
+
+    print("\nAutomatic check (pipeline/check.py, data/checks.json)")
+    auto = json.loads(AUTO_CHECKS.read_text())["spikes"] if AUTO_CHECKS.exists() else []
+    recent_auto = [a for a in auto if a["day"] >= (date.today() - timedelta(days=args.days)).isoformat()]
+    if recent_auto:
+        found = sum(a["verdict"] == "news found" for a in recent_auto)
+        both = sum(len(a.get("evidence", [])) == 2 for a in recent_auto)
+        print(f"  News found for {found} of {len(recent_auto)} spikes in the last {args.days} days ({both} by both market and story)")
+        agree, compared, misses = agreement(rows, auto)
+        if compared:
+            print(f"  Agrees with the hand checks on {agree} of {compared}")
+            for m in misses:
+                print(f"    {m}")
+    else:
+        print("  Not run yet: python -m pipeline.check")
 
 
 if __name__ == "__main__":

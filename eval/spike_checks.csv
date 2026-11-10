@@ -7,3 +7,5 @@ day,symbol,verdict,reason,source
 2026-11-09,WMT,false,Shopping deals and local store news; 11 headlines vs a usual 6.7 is small-count noise,headline sample in data/headlines.json
 2026-11-09,BAC,false,Mostly the bank's analysts writing about other companies (fixed by the analyst-note rule),headline sample in data/headlines.json
 2026-11-09,COST,false,Holiday shopping coverage building for two weeks,headline sample in data/headlines.json
+2026-11-10,COST,real,$30 special dividend (about $13.3B) and a renewed $4B buyback,https://www.sec.gov/Archives/edgar/data/0000909832/000090983226000134/costex9918-k111026.htm
+2026-11-10,TSM,real,"October revenue up about 60% year on year, a monthly record (reported by about 30 publishers)",headline sample in data/headlines.json

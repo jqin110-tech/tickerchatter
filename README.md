@@ -31,8 +31,7 @@ Flags which of 40 large-cap stocks are getting unusually many news headlines tod
   no address), so searches currently cover the 40 tracked stocks.
 
 ## Results
-
-All numbers below come from runs of this code on 2026-11-09 and 2026-11-10.
+All numbers come from runs of this code on 2026-11-09 and 10.
 
 | Version | Stocks flagged as spiking |
 |---|---|
@@ -41,12 +40,11 @@ All numbers below come from runs of this code on 2026-11-09 and 2026-11-10.
 | Rebuilt counting, first hourly run (Mon Nov 9, 21:01 Pacific) | 8 of 40 (20%) |
 | With both fixes below, same Monday data replayed | 7 of 40 |
 
-**The 70% bug.** The first version searched 2-day date ranges, starting
-from the UTC date. From 4pm in California, the newest range included a
-day that hadn't happened yet. Its 100 results were packed into the few
-hours that had, so busy stocks looked like spikes all evening. A test
-(`tests/test_bias.py`) rebuilds this with a perfectly steady fake stock.
-The old method gives z of about 5 and the new one about 0.
+**The 70% bug.** The first version searched 2-day date ranges starting from
+the UTC date, so from 4pm in California the newest range included a day that
+hadn't happened yet. Its 100 results were packed into the hours that had, so
+busy stocks looked like spikes all evening. `tests/test_bias.py` rebuilds this
+with a steady fake stock: the old method gives z ≈ 5, the new one z ≈ 0.
 
 **Checking the 8 Monday spikes against the news:**
 
@@ -56,23 +54,25 @@ The old method gives z of about 5 and the new one about 0.
 - **3 false alarms:** Walmart (small counts), Bank of America (its analysts'
   notes about other companies), Costco (holiday coverage building for weeks).
 
-**Fixes from that check:** the √mean floor (next section), and analyst notes
-no longer count for JPMorgan, Goldman Sachs and Bank of America ("JPMorgan
-downgrades Nike" is news about Nike). In the stored data, that was roughly a
-quarter to a third of all headlines naming those banks.
+**Fixes:** the √mean floor (next section), and analyst notes ("JPMorgan
+downgrades Nike") no longer count for JPMorgan, Goldman Sachs and Bank of
+America: a quarter to a third of their headlines. Replaying Monday, Walmart
+and Bank of America drop out; Goldman Sachs comes in (6 vs a usual 1.9).
 
-Replaying Monday with both fixes: Walmart and Bank of America drop out; Goldman
-Sachs comes in (6 headlines vs a usual 1.9; I couldn't find the news behind it).
+**Tried and rejected** for slow trends: a 5-weekday baseline (same 51 spikes
+over 7 replayed weekdays) and a median baseline (74).
 
-**Tried and rejected:** a shorter or median baseline to handle slow trends
-like Costco. Replayed over 7 weekdays, a 5-weekday baseline gave the same
-51 spikes and a median baseline gave 74.
+**Checking spikes automatically.** Every hour, `pipeline/check.py` looks for
+evidence behind each spike of the past week. Market: the stock's move minus
+the S&P 500's, and its volume, against the last 20 trading days (Yahoo's free
+daily prices). Story: unusual words shared by at least 5 publishers ("special
+dividend"). For Nov 3 to 10 it found evidence for 36 of 44 spikes and agreed
+with all 9 hand checks it could compare. It also caught my mistake: Costco's
+Nov 10 spike, which I'd put down to holiday coverage, was a $30 special dividend.
 
-**Measuring it going forward.** Every run appends a line to `runs.jsonl` on
-the `data` branch, and spikes checked by hand go in `eval/spike_checks.csv`.
-`python -m pipeline.report` turns both into the two numbers that matter:
-the share of stocks flagged per day, and the share of spikes backed by real
-news. TODO: both over a full week (only Nov 9 is checked so far).
+**Measuring it.** `python -m pipeline.report` shows the share of stocks flagged
+per day, the hand checks (`eval/spike_checks.csv`) and how often the automatic
+check agrees. TODO: all three over a full week (hand checks: Nov 9 and 10).
 
 ## Hardest bug: tiny counts, huge z-scores
 
@@ -105,8 +105,9 @@ mkdir -p data && git fetch origin data       # optional: start from the live sit
 git show origin/data:headlines.json > data/headlines.json
 python -m pipeline.run                       # searches what's missing (15 days on a first run)
 python -m http.server 8000 --directory site  # then open http://localhost:8000
-python -m pytest                             # 59 tests, no network needed
-python -m pipeline.report                    # share flagged per day, share of spikes that were real
+python -m pytest                             # 69 tests, no network needed
+python -m pipeline.check --today            # evidence behind each spike of the last week
+python -m pipeline.report                    # share flagged, hand checks, agreement
 ```
 
 On a Mac, double-clicking `Run TickerChatter.command` runs the pipeline and opens the site.
