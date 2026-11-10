@@ -4,14 +4,15 @@ Flags which of 40 large-cap stocks are getting unusually many news headlines tod
 
 **Live site:** https://jqin110-tech.github.io/tickerchatter
 
-> TODO: screenshot of the front page (save as `docs/screenshot.png` and link it here)
+![TickerChatter front page](docs/screenshot.png)
 
 ## How it works
 
 - **Ingestion.** For each stock, one Google News RSS search per California
   calendar day (`after:2026-11-09 before:2026-11-10`). A headline counts
   only if it was published that day and names the company (symbol, cashtag
-  or known name). Repeats of the same story are counted once. Google returns
+  or known name). Repeats count once, and auto-generated fund-filing
+  headlines ("$AAPL Shares Sold by X LLC") don't count. Google returns
   at most 100 results per search, so stocks that hit the cap switch to a
   narrower `"Name stock"` query for all 15 days.
 - **Aggregation.** Today so far is compared with the same hours on each of
@@ -21,8 +22,9 @@ Flags which of 40 large-cap stocks are getting unusually many news headlines tod
   spike and `z ≥ 1` is elevated. A stock needs 3 comparable days of history
   before it gets a score.
 - **Running it.** GitHub Actions is scheduled to run the pipeline every hour
-  (`pipeline/run.py`), commit the data, and redeploy the GitHub Pages site,
-  but only after the tests pass. The site runs the same Python
+  (`pipeline/run.py`) and redeploy the GitHub Pages site, but only after the
+  tests pass. The collected data is saved to a `data` branch that keeps only
+  its latest version, so the repo doesn't grow by 16 MB an hour. The site runs the same Python
   (`extract.py`, `stats.py`) in the browser with Pyodide. `worker/` is a
   Cloudflare Worker that would fetch headlines for any company typed into
   the search box. It is written but not deployed yet (`site/config.js` has
@@ -59,16 +61,18 @@ no longer count for JPMorgan, Goldman Sachs and Bank of America ("JPMorgan
 downgrades Nike" is news about Nike). In the stored data, that was roughly a
 quarter to a third of all headlines naming those banks.
 
-Replaying Monday with both fixes: Walmart and Bank of America drop out.
-Goldman Sachs comes in, with 6 headlines against a usual 1.9; I couldn't
-find the news behind it.
+Replaying Monday with both fixes: Walmart and Bank of America drop out; Goldman
+Sachs comes in (6 headlines vs a usual 1.9; I couldn't find the news behind it).
 
 **Tried and rejected:** a shorter or median baseline to handle slow trends
 like Costco. Replayed over 7 weekdays, a 5-weekday baseline gave the same
 51 spikes and a median baseline gave 74.
 
-**Not measured yet:** TODO: share of stocks flagged over a full week of hourly
-runs. TODO: share of spikes backed by real news, over more than one day.
+**Measuring it going forward.** Every run appends a line to `runs.jsonl` on
+the `data` branch, and spikes checked by hand go in `eval/spike_checks.csv`.
+`python -m pipeline.report` turns both into the two numbers that matter:
+the share of stocks flagged per day, and the share of spikes backed by real
+news. TODO: both over a full week (only Nov 9 is checked so far).
 
 ## Hardest bug: tiny counts, huge z-scores
 
@@ -85,33 +89,30 @@ that. The fix was to divide by `max(std, √mean, 1)` (`spread_of` in
 `pipeline/stats.py`). Walmart dropped to z = 1.66. When a stock's
 baseline already varies by more than √mean, nothing changes.
 
-I replayed 7 weekdays (Oct 30 to Nov 9; 276 stock-days, data as of
-commit `8a242ff`). Spikes went from 56 to 51. In all 5 removed cases the
-baseline was steadier than chance alone allows. For example, Tesla on
-Nov 2 had 23 headlines against a usual 19, but a std of 1.4 where √19
-is 4.4, so it scored z = 2.84; it now scores 0.92. The large stories
-(Nvidia, Berkshire, Lilly) didn't move. Tests in `tests/test_stats.py`
-cover the 0, 0, 1 case, a steady small-count case and a busy stock's
-real spike.
+`python -m pipeline.replay --rev 8a242ff` replays 7 weekdays (Oct 30 to
+Nov 9, 276 stock-days) under both rules: 56 spikes become 51. In all 5
+removed cases the baseline was steadier than chance alone allows. Tesla
+on Nov 2 had 23 headlines against a usual 18.75, with a std of 1.26 where
+√18.75 is 4.3, so it scored z = 3.37; it now scores 0.98. The large stories
+(Nvidia, Berkshire, Lilly) didn't move.
 
-## Run it locally
+## Run it locally (Python 3.9 or newer)
 
-Needs Python 3.9 or newer.
 ```bash
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements-dev.txt
-python -m pipeline.run --backfill            # first time: searches 15 days per stock
-python -m pipeline.run                       # later: re-searches just today
+mkdir -p data && git fetch origin data       # optional: start from the live site's data
+git show origin/data:headlines.json > data/headlines.json
+python -m pipeline.run                       # searches what's missing (15 days on a first run)
 python -m http.server 8000 --directory site  # then open http://localhost:8000
-python -m pytest                             # 52 tests, no network needed
+python -m pytest                             # 59 tests, no network needed
+python -m pipeline.report                    # share flagged per day, share of spikes that were real
 ```
 
 On a Mac, double-clicking `Run TickerChatter.command` runs the pipeline and opens the site.
 
 The tests cover spikes, flat days, tiny counts, missing days, empty input,
-duplicate headlines, time-zone and daylight-saving edges, the 100-result cap,
-and a regression test for the 70% bug. They run on every push, and the hourly
-deploy waits for them to pass.
+duplicates, time zones, the 100-result cap, the filters, and a regression
+test for the 70% bug. The hourly deploy waits for them to pass.
 
-Counts measure attention, not whether the news is good or bad. Nothing
-here is trading advice.
+Counts measure attention, not whether news is good or bad. Not trading advice.

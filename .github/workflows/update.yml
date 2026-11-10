@@ -49,6 +49,18 @@ jobs:
       - name: Install
         run: pip install -r requirements.txt
 
+      # The collected headlines live on their own branch, "data", which only
+      # ever holds its latest version. Committing the 16 MB store to main every
+      # hour grew the repo by about 0.5 MB a run and buried real commits under
+      # bot commits.
+      - name: Load saved data
+        run: |
+          mkdir -p data
+          if git fetch --quiet --depth=1 origin data; then
+            git show FETCH_HEAD:headlines.json > data/headlines.json
+            git show FETCH_HEAD:runs.jsonl > data/runs.jsonl 2>/dev/null || rm -f data/runs.jsonl
+          fi
+
       - name: Fetch headlines and score
         run: |
           if [ -f data/headlines.json ]; then
@@ -57,13 +69,17 @@ jobs:
             python -m pipeline.run --backfill
           fi
 
-      - name: Save collected headlines
+      - name: Save data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          cd data
+          git init --quiet --initial-branch=data
           git config user.name "tickerchatter-bot"
           git config user.email "tickerchatter-bot@users.noreply.github.com"
-          git add data/headlines.json site/data site/py
-          git diff --cached --quiet || git commit -m "Update headlines"
-          git push
+          git add headlines.json runs.jsonl
+          git commit --quiet -m "Saved data $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push --quiet --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" data
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

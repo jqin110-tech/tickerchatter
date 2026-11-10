@@ -1,0 +1,9 @@
+day,symbol,verdict,reason,source
+2026-11-09,NVDA,real,Board opened probe into CEO Jensen Huang; stock fell about 4% while the Nasdaq rose,https://www.cnbc.com/2026/11/09/nvidia-jensen-huang-chinese-spy-investigation.html
+2026-11-09,AVGO,real,Stock rose 8.8% in a chip rebound,https://www.gurufocus.com/news/9186077/broadcom-avgo-shares-surge-nearly-9-amid-tech-sector-rally-on-november-09-2026
+2026-11-09,LLY,real,Foundayo Phase 3 sleep apnea results,https://www.biospace.com/drug-development/lilly-to-seek-second-sleep-apnea-approval-after-foundayo-reduces-disease-severity-in-phase-3
+2026-11-09,BRK.B,real,Q3 earnings (Nov 7): record buybacks and operating earnings down,https://www.cnbc.com/2026/11/07/berkshire-hathaway-q3-2026-earnings-buybacks.html
+2026-11-09,SBUX,minor,Holiday cups and drinks and UK hiring; the Chipotle takeover headline was an October rumour Starbucks had denied,https://www.foxbusiness.com/retail/starbucks-says-not-buying-chipotle-following-deal-speculation
+2026-11-09,WMT,false,Shopping deals and local store news; 11 headlines vs a usual 6.7 is small-count noise,headline sample in data/headlines.json
+2026-11-09,BAC,false,Mostly the bank's analysts writing about other companies (fixed by the analyst-note rule),headline sample in data/headlines.json
+2026-11-09,COST,false,Holiday shopping coverage building for two weeks,headline sample in data/headlines.json
