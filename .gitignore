@@ -17,3 +17,6 @@ __pycache__/
 # Cloudflare Wrangler local state
 .wrangler/
 node_modules/
+
+# Test cache
+.pytest_cache/
