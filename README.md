@@ -72,7 +72,7 @@ Nov 10 spike, which I'd put down to holiday coverage, was a $30 special dividend
 
 **Measuring it.** `python -m pipeline.report` shows the share of stocks flagged
 per day, the hand checks (`eval/spike_checks.csv`) and how often the automatic
-check agrees. TODO: all three over a full week (hand checks: Nov 9 and 10).
+check agrees. So far the hand checks cover Nov 9 and 10 only.
 
 ## Hardest bug: tiny counts, huge z-scores
 
