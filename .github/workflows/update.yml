@@ -93,5 +93,9 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
+      # GitHub can take a few seconds to list a site it has just received.
+      # Deploying straight away sometimes fails with "No artifacts named github-pages".
+      - name: Wait for the uploaded site to be listed
+        run: sleep 20
       - id: deploy
         uses: actions/deploy-pages@v4
