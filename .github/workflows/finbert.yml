@@ -1,0 +1,50 @@
+# Runs the FinBERT baseline on GitHub's computers, because the model has to
+# be downloaded from huggingface.co. Only runs on the sentiment-stage branch,
+# and only when the script, the sample or this file changes.
+name: FinBERT baseline
+
+on:
+  push:
+    branches: [sentiment-stage]
+    paths:
+      - sentiment/finbert_baseline.py
+      - eval/sentiment_sample.csv
+      - .github/workflows/finbert.yml
+
+jobs:
+  # Job 1 downloads and runs the model. It can read the repo but not change it.
+  predict:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements-ml.txt
+      - run: python -m sentiment.finbert_baseline
+      - uses: actions/upload-artifact@v4
+        with:
+          name: predictions
+          path: eval/finbert_predictions.csv
+
+  # Job 2 is a second, fresh computer that never downloads the model.
+  # It only takes the CSV from job 1 and commits it.
+  save:
+    needs: predict
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: predictions
+          path: eval
+      - run: |
+          git config user.name "tickerchatter-bot"
+          git config user.email "tickerchatter-bot@users.noreply.github.com"
+          git add eval/finbert_predictions.csv
+          git commit -m "Add FinBERT predictions for the sample" || echo "Nothing changed"
+          git push
