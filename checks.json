@@ -1,0 +1,2273 @@
+{
+ "spikes": [
+  {
+   "day": "2026-11-03",
+   "symbol": "AAPL",
+   "z": 4.05,
+   "current": 72,
+   "mean": 21.2,
+   "market": {
+    "excess_return": -0.022,
+    "z": -1.69,
+    "volume_ratio": 1.61,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "AMD",
+   "z": 7.63,
+   "current": 82,
+   "mean": 20.6,
+   "market": {
+    "excess_return": 0.0336,
+    "z": 0.87,
+    "volume_ratio": 1.81,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "DIS",
+   "z": 5.48,
+   "current": 13,
+   "mean": 3.2,
+   "market": {
+    "excess_return": 0.0065,
+    "z": 0.45,
+    "volume_ratio": 1.61,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "thousands",
+      "share": 0.23,
+      "lift": 53.4,
+      "sources": 19
+     },
+     {
+      "word": "layoffs",
+      "share": 0.2,
+      "lift": 11.5,
+      "sources": 16
+     }
+    ],
+    "example": "Disney Eyes Thousands of Layoffs as It Targets 20% Cost Savings",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "MCD",
+   "z": 2.11,
+   "current": 6,
+   "mean": 2.6,
+   "market": {
+    "excess_return": -0.0128,
+    "z": -0.78,
+    "volume_ratio": 1.18,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "earnings",
+      "share": 0.27,
+      "lift": 5.3,
+      "sources": 6
+     }
+    ],
+    "example": "BTIG's Peter Saleh previews Wednesday's McDonald's earnings",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "NVDA",
+   "z": 2.44,
+   "current": 33,
+   "mean": 20.6,
+   "market": {
+    "excess_return": 0.0199,
+    "z": 1.41,
+    "volume_ratio": 1.0,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "PFE",
+   "z": 2.68,
+   "current": 8,
+   "mean": 3.2,
+   "market": {
+    "excess_return": -0.0248,
+    "z": -1.46,
+    "volume_ratio": 1.85,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "earnings",
+      "share": 0.39,
+      "lift": 4.4,
+      "sources": 19
+     },
+     {
+      "word": "raises",
+      "share": 0.21,
+      "lift": 21.6,
+      "sources": 15
+     },
+     {
+      "word": "outlook",
+      "share": 0.17,
+      "lift": 8.8,
+      "sources": 13
+     },
+     {
+      "word": "guidance",
+      "share": 0.16,
+      "lift": 16.5,
+      "sources": 12
+     }
+    ],
+    "example": "Earnings call transcript: Pfizer tops Q3 2026 estimates, lifts outlook By Investing.com",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "PLTR",
+   "z": 4.07,
+   "current": 69,
+   "mean": 19.4,
+   "market": {
+    "excess_return": -0.0195,
+    "z": -0.71,
+    "volume_ratio": 2.39,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "SHOP",
+   "z": 26.27,
+   "current": 55,
+   "mean": 3.8,
+   "market": {
+    "excess_return": -0.0904,
+    "z": -4.05,
+    "volume_ratio": 3.6,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "revenue",
+      "share": 0.31,
+      "lift": 10.3,
+      "sources": 28
+     }
+    ],
+    "example": "Agentic Commerce Drives Shopify Revenue Up 32%",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "SMCI",
+   "z": 12.09,
+   "current": 67,
+   "mean": 14.6,
+   "market": {
+    "excess_return": 0.0282,
+    "z": 0.63,
+    "volume_ratio": 1.98,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-03",
+   "symbol": "SNOW",
+   "z": 3.54,
+   "current": 29,
+   "mean": 15.2,
+   "market": {
+    "excess_return": 0.012,
+    "z": 0.34,
+    "volume_ratio": 1.13,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "autonomous",
+      "share": 0.16,
+      "lift": 14.8,
+      "sources": 7
+     },
+     {
+      "word": "agents",
+      "share": 0.16,
+      "lift": 14.8,
+      "sources": 7
+     }
+    ],
+    "example": "Snowflake Adds Autonomous Bots to CoCo and CoWork AI Agents",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-04",
+   "symbol": "ADBE",
+   "z": 2.15,
+   "current": 8,
+   "mean": 3.8,
+   "market": {
+    "excess_return": -0.007,
+    "z": -0.24,
+    "volume_ratio": 1.13,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "citi",
+      "share": 0.22,
+      "lift": 22.4,
+      "sources": 7
+     },
+     {
+      "word": "coworker",
+      "share": 0.2,
+      "lift": 19.9,
+      "sources": 7
+     },
+     {
+      "word": "enterprise",
+      "share": 0.17,
+      "lift": 5.8,
+      "sources": 6
+     }
+    ],
+    "example": "Adobe downgraded to Sell due to risk of 'hard reset': Citi",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-04",
+   "symbol": "ARM",
+   "z": 5.67,
+   "current": 24,
+   "mean": 6.8,
+   "market": {
+    "excess_return": -0.0693,
+    "z": -1.8,
+    "volume_ratio": 1.9,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "revenue",
+      "share": 0.31,
+      "lift": 9.9,
+      "sources": 8
+     }
+    ],
+    "example": "Arm Holdings (ARM) Reports Record Q2 Revenue, Continues Strong G",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-04",
+   "symbol": "BRK.B",
+   "z": 2.95,
+   "current": 29,
+   "mean": 14.2,
+   "market": {
+    "excess_return": 0.023,
+    "z": 1.84,
+    "volume_ratio": 1.48,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "sirius",
+      "share": 0.2,
+      "lift": 17.6,
+      "sources": 5
+     }
+    ],
+    "example": "American billionaire Warren Buffett's Berkshire Hathaway buys $26.9 million more Sirius XM shares",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-04",
+   "symbol": "MCD",
+   "z": 6.65,
+   "current": 16,
+   "mean": 3.2,
+   "market": {
+    "excess_return": 0.0488,
+    "z": 2.91,
+    "volume_ratio": 2.24,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "earnings",
+      "share": 0.42,
+      "lift": 8.1,
+      "sources": 13
+     },
+     {
+      "word": "sales",
+      "share": 0.16,
+      "lift": 18.3,
+      "sources": 9
+     },
+     {
+      "word": "beat",
+      "share": 0.16,
+      "lift": 18.3,
+      "sources": 7
+     },
+     {
+      "word": "u.s.",
+      "share": 0.16,
+      "lift": 18.3,
+      "sources": 8
+     }
+    ],
+    "example": "McDonald's Beats Earnings, but US Sales Tell Another Story",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-04",
+   "symbol": "NKE",
+   "z": 2.49,
+   "current": 8,
+   "mean": 3.4,
+   "market": {
+    "excess_return": 0.0357,
+    "z": 1.8,
+    "volume_ratio": 1.41,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-04",
+   "symbol": "SNOW",
+   "z": 2.28,
+   "current": 34,
+   "mean": 17.6,
+   "market": {
+    "excess_return": -0.0316,
+    "z": -0.9,
+    "volume_ratio": 1.46,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-04",
+   "symbol": "TSLA",
+   "z": 7.34,
+   "current": 51,
+   "mean": 19,
+   "market": {
+    "excess_return": -0.0499,
+    "z": -2.61,
+    "volume_ratio": 1.36,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-04",
+   "symbol": "UBER",
+   "z": 10.58,
+   "current": 35,
+   "mean": 7,
+   "market": {
+    "excess_return": 0.0326,
+    "z": 1.76,
+    "volume_ratio": 2.25,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-05",
+   "symbol": "BAC",
+   "z": 2.51,
+   "current": 32,
+   "mean": 20.6,
+   "market": {
+    "excess_return": 0.0079,
+    "z": 0.62,
+    "volume_ratio": 1.44,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-05",
+   "symbol": "JPM",
+   "z": 7.8,
+   "current": 8,
+   "mean": 0.2,
+   "market": {
+    "excess_return": 0.0021,
+    "z": 0.17,
+    "volume_ratio": 2.08,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "epstein",
+      "share": 0.42,
+      "lift": 55.8,
+      "sources": 13
+     },
+     {
+      "word": "democrats",
+      "share": 0.33,
+      "lift": 44.7,
+      "sources": 11
+     },
+     {
+      "word": "probe",
+      "share": 0.33,
+      "lift": 44.7,
+      "sources": 11
+     },
+     {
+      "word": "ties",
+      "share": 0.28,
+      "lift": 37.2,
+      "sources": 10
+     }
+    ],
+    "example": "Democrats gearing up to probe JPMorgan's relationship with Epstein, CNBC reports",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-05",
+   "symbol": "MU",
+   "z": 7.06,
+   "current": 53,
+   "mean": 20.8,
+   "market": {
+    "excess_return": -0.1305,
+    "z": -3.48,
+    "volume_ratio": 2.91,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "taiwan",
+      "share": 0.2,
+      "lift": 15.0,
+      "sources": 17
+     },
+     {
+      "word": "plant",
+      "share": 0.15,
+      "lift": 34.3,
+      "sources": 14
+     }
+    ],
+    "example": "Micron freezes Taiwan plant as workers demand bigger cut",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-05",
+   "symbol": "NVDA",
+   "z": 6.34,
+   "current": 63,
+   "mean": 26.4,
+   "market": {
+    "excess_return": -0.0485,
+    "z": -2.68,
+    "volume_ratio": 3.31,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-05",
+   "symbol": "SBUX",
+   "z": 4.66,
+   "current": 83,
+   "mean": 39.6,
+   "market": {
+    "excess_return": 0.0118,
+    "z": 0.68,
+    "volume_ratio": 1.43,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "holiday",
+      "share": 0.74,
+      "lift": 8.1,
+      "sources": 52
+     },
+     {
+      "word": "menu",
+      "share": 0.45,
+      "lift": 10.2,
+      "sources": 36
+     }
+    ],
+    "example": "A Tiramisu Velvet Latte & More Festive Drinks On Starbucks\u2019 New Holiday Menu",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-05",
+   "symbol": "TSM",
+   "z": 3.21,
+   "current": 9,
+   "mean": 3,
+   "market": {
+    "excess_return": -0.0637,
+    "z": -3.21,
+    "volume_ratio": 3.73,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-06",
+   "symbol": "LLY",
+   "z": 2.62,
+   "current": 33,
+   "mean": 21,
+   "market": {
+    "excess_return": -0.011,
+    "z": -0.43,
+    "volume_ratio": 1.5,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "hims",
+      "share": 0.55,
+      "lift": 108.9,
+      "sources": 19
+     },
+     {
+      "word": "hers",
+      "share": 0.53,
+      "lift": 103.9,
+      "sources": 18
+     },
+     {
+      "word": "drugs",
+      "share": 0.25,
+      "lift": 4.5,
+      "sources": 10
+     },
+     {
+      "word": "deal",
+      "share": 0.15,
+      "lift": 14.8,
+      "sources": 6
+     }
+    ],
+    "example": "Eli Lilly, Hims & Hers reach deal on direct obesity drug sales",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-06",
+   "symbol": "META",
+   "z": 2.2,
+   "current": 23,
+   "mean": 14.6,
+   "market": {
+    "excess_return": 0.0053,
+    "z": 0.24,
+    "volume_ratio": 0.66,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-07",
+   "symbol": "BRK.B",
+   "z": 3.0,
+   "current": 41,
+   "mean": 15.57,
+   "market": null,
+   "story": {
+    "words": [
+     {
+      "word": "buybacks",
+      "share": 0.26,
+      "lift": 19.6,
+      "sources": 9
+     },
+     {
+      "word": "profit",
+      "share": 0.19,
+      "lift": 14.2,
+      "sources": 7
+     },
+     {
+      "word": "billion",
+      "share": 0.19,
+      "lift": 5.7,
+      "sources": 8
+     }
+    ],
+    "example": "Berkshire Hathaway accelerates stock buybacks, operating profit falls",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-09",
+   "symbol": "BA",
+   "z": 2.76,
+   "current": 14,
+   "mean": 6.8,
+   "market": {
+    "excess_return": -0.0295,
+    "z": -0.99,
+    "volume_ratio": 1.6,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "commercial",
+      "share": 0.49,
+      "lift": 25.8,
+      "sources": 43
+     },
+     {
+      "word": "workforce",
+      "share": 0.43,
+      "lift": 101.8,
+      "sources": 36
+     },
+     {
+      "word": "airplane",
+      "share": 0.26,
+      "lift": 41.0,
+      "sources": 23
+     }
+    ],
+    "example": "BA Stock Edges Lower As Boeing Reportedly Trims 5% Of Commercial Airplanes Workforce",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-09",
+   "symbol": "BRK.B",
+   "z": 4.58,
+   "current": 49,
+   "mean": 19.4,
+   "market": {
+    "excess_return": -0.016,
+    "z": -1.11,
+    "volume_ratio": 1.33,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "buybacks",
+      "share": 0.24,
+      "lift": 11.7,
+      "sources": 13
+     }
+    ],
+    "example": "American billionaire Warren Buffett\u2019s Berkshire Hathaway more than doubles buybacks to $9.6 billion as profit dips",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-09",
+   "symbol": "LLY",
+   "z": 5.61,
+   "current": 58,
+   "mean": 22.4,
+   "market": {
+    "excess_return": 0.0191,
+    "z": 0.73,
+    "volume_ratio": 1.47,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "foundayo",
+      "share": 0.32,
+      "lift": 29.5,
+      "sources": 15
+     },
+     {
+      "word": "sleep",
+      "share": 0.3,
+      "lift": 84.1,
+      "sources": 16
+     },
+     {
+      "word": "apnea",
+      "share": 0.29,
+      "lift": 79.7,
+      "sources": 16
+     },
+     {
+      "word": "pill",
+      "share": 0.19,
+      "lift": 17.7,
+      "sources": 11
+     }
+    ],
+    "example": "AHA26: Lilly\u2019s Foundayo benefits beyond weight loss in Phase III sleep apnoea win",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-09",
+   "symbol": "NVDA",
+   "z": 2.55,
+   "current": 90,
+   "mean": 41.8,
+   "market": {
+    "excess_return": -0.0664,
+    "z": -3.12,
+    "volume_ratio": 4.83,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "huang",
+      "share": 0.36,
+      "lift": 6.0,
+      "sources": 53
+     },
+     {
+      "word": "jensen",
+      "share": 0.33,
+      "lift": 6.9,
+      "sources": 51
+     },
+     {
+      "word": "affair",
+      "share": 0.16,
+      "lift": 86.0,
+      "sources": 30
+     }
+    ],
+    "example": "A.I. Fueled Nvidia CEO Jensen Huang\u2019s Elite Status, but Scandal Followed",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-10",
+   "symbol": "TSM",
+   "z": 3.6,
+   "current": 17,
+   "mean": 5.8,
+   "market": {
+    "excess_return": 0.0239,
+    "z": 0.86,
+    "volume_ratio": 1.12,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "october",
+      "share": 0.33,
+      "lift": 36.8,
+      "sources": 30
+     },
+     {
+      "word": "anthropic",
+      "share": 0.24,
+      "lift": 13.1,
+      "sources": 23
+     },
+     {
+      "word": "openai",
+      "share": 0.23,
+      "lift": 75.7,
+      "sources": 22
+     },
+     {
+      "word": "revenue",
+      "share": 0.22,
+      "lift": 8.1,
+      "sources": 21
+     }
+    ],
+    "example": "Taiwan Semiconductor Sales Jump 60% In October As AI Boom Continues",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-11",
+   "symbol": "COST",
+   "z": 7.35,
+   "current": 24,
+   "mean": 6,
+   "market": {
+    "excess_return": 0.0069,
+    "z": 0.3,
+    "volume_ratio": 0.94,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "dividend",
+      "share": 0.68,
+      "lift": 94.3,
+      "sources": 16
+     },
+     {
+      "word": "special",
+      "share": 0.61,
+      "lift": 85.3,
+      "sources": 13
+     },
+     {
+      "word": "buyback",
+      "share": 0.26,
+      "lift": 143.7,
+      "sources": 6
+     }
+    ],
+    "example": "Can a 74-Year-Old Use Costco\u2019s $30 Special Dividend to Meet a $40,000 RMD?",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-12",
+   "symbol": "AMD",
+   "z": 2.54,
+   "current": 77,
+   "mean": 43.2,
+   "market": {
+    "excess_return": 0.0621,
+    "z": 1.02,
+    "volume_ratio": 1.95,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "broadcom",
+      "share": 0.3,
+      "lift": 12.9,
+      "sources": 27
+     },
+     {
+      "word": "huang",
+      "share": 0.18,
+      "lift": 32.2,
+      "sources": 17
+     },
+     {
+      "word": "jensen",
+      "share": 0.16,
+      "lift": 34.9,
+      "sources": 16
+     }
+    ],
+    "example": "AMD and Broadcom emerge as winners amid Nvidia leadership uncertainty",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-12",
+   "symbol": "CVX",
+   "z": 3.0,
+   "current": 55,
+   "mean": 29.8,
+   "market": {
+    "excess_return": 0.0179,
+    "z": 0.76,
+    "volume_ratio": 1.12,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "biodiesel",
+      "share": 0.44,
+      "lift": 76.1,
+      "sources": 24
+     },
+     {
+      "word": "iowa",
+      "share": 0.35,
+      "lift": 121.8,
+      "sources": 19
+     },
+     {
+      "word": "restart",
+      "share": 0.33,
+      "lift": 115.7,
+      "sources": 19
+     },
+     {
+      "word": "plant",
+      "share": 0.3,
+      "lift": 51.7,
+      "sources": 17
+     }
+    ],
+    "example": "Chevron announces restart of 42-million-gallon Iowa biodiesel plant",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-12",
+   "symbol": "INTC",
+   "z": 2.29,
+   "current": 29,
+   "mean": 19,
+   "market": {
+    "excess_return": -0.0173,
+    "z": -0.24,
+    "volume_ratio": 0.6,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-12",
+   "symbol": "SBUX",
+   "z": 3.24,
+   "current": 7,
+   "mean": 2.2,
+   "market": {
+    "excess_return": -0.0204,
+    "z": -1.33,
+    "volume_ratio": 0.68,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-12",
+   "symbol": "SMCI",
+   "z": 4.87,
+   "current": 61,
+   "mean": 24.2,
+   "market": {
+    "excess_return": -0.1095,
+    "z": -2.15,
+    "volume_ratio": 2.77,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "nvidia",
+      "share": 0.21,
+      "lift": 7.5,
+      "sources": 12
+     },
+     {
+      "word": "smuggling",
+      "share": 0.2,
+      "lift": 62.8,
+      "sources": 11
+     },
+     {
+      "word": "probes",
+      "share": 0.18,
+      "lift": 58.0,
+      "sources": 12
+     },
+     {
+      "word": "huang",
+      "share": 0.17,
+      "lift": 53.2,
+      "sources": 10
+     }
+    ],
+    "example": "After Nvidia chips, Super Micro servers? DOJ probes Alice Huang over alleged shipments to China",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-13",
+   "symbol": "ARM",
+   "z": 3.89,
+   "current": 21,
+   "mean": 9.2,
+   "market": {
+    "excess_return": -0.0427,
+    "z": -0.83,
+    "volume_ratio": 1.16,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "nvidia",
+      "share": 0.48,
+      "lift": 32.1,
+      "sources": 7
+     },
+     {
+      "word": "haas",
+      "share": 0.38,
+      "lift": 51.4,
+      "sources": 5
+     }
+    ],
+    "example": "Arm Holdings Stock (ARM) Dives as Nvidia (NVDA) Comes Hunting for CEO Haas",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-13",
+   "symbol": "AVGO",
+   "z": 2.89,
+   "current": 27,
+   "mean": 15.6,
+   "market": {
+    "excess_return": -0.044,
+    "z": -1.31,
+    "volume_ratio": 1.28,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-13",
+   "symbol": "MSFT",
+   "z": 4.03,
+   "current": 49,
+   "mean": 21.2,
+   "market": {
+    "excess_return": 0.0053,
+    "z": 0.3,
+    "volume_ratio": 1.04,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "outage",
+      "share": 0.59,
+      "lift": 621.7,
+      "sources": 27
+     },
+     {
+      "word": "outlook",
+      "share": 0.32,
+      "lift": 30.6,
+      "sources": 17
+     },
+     {
+      "word": "teams",
+      "share": 0.16,
+      "lift": 21.0,
+      "sources": 12
+     }
+    ],
+    "example": "CrowdStrike and Palo Alto Networks Climb 3% as Microsoft Outage Disrupts Outlook and Teams",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-16",
+   "symbol": "BAC",
+   "z": 2.89,
+   "current": 8,
+   "mean": 3,
+   "market": {
+    "excess_return": 0.0007,
+    "z": 0.07,
+    "volume_ratio": 0.92,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "chase",
+      "share": 0.53,
+      "lift": 9.0,
+      "sources": 37
+     },
+     {
+      "word": "fargo",
+      "share": 0.43,
+      "lift": 31.1,
+      "sources": 30
+     },
+     {
+      "word": "wells",
+      "share": 0.43,
+      "lift": 31.1,
+      "sources": 30
+     },
+     {
+      "word": "outages",
+      "share": 0.32,
+      "lift": 116.8,
+      "sources": 23
+     }
+    ],
+    "example": "Are banks down? Chase, Bank of America, Zelle customers have problems",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-16",
+   "symbol": "BRK.B",
+   "z": 3.49,
+   "current": 72,
+   "mean": 26,
+   "market": {
+    "excess_return": 0.019,
+    "z": 1.29,
+    "volume_ratio": 0.76,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "bank",
+      "share": 0.29,
+      "lift": 33.1,
+      "sources": 17
+     },
+     {
+      "word": "stake",
+      "share": 0.23,
+      "lift": 9.8,
+      "sources": 14
+     },
+     {
+      "word": "buffett",
+      "share": 0.23,
+      "lift": 5.6,
+      "sources": 17
+     },
+     {
+      "word": "america",
+      "share": 0.2,
+      "lift": 17.6,
+      "sources": 13
+     }
+    ],
+    "example": "Berkshire Boosts Lennar, Starts Bending Spoons, Trims Bank Of America In Q3",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-16",
+   "symbol": "CVX",
+   "z": 2.39,
+   "current": 61,
+   "mean": 40,
+   "market": {
+    "excess_return": 0.0066,
+    "z": 0.29,
+    "volume_ratio": 0.76,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "beacon",
+      "share": 0.27,
+      "lift": 104.7,
+      "sources": 14
+     },
+     {
+      "word": "deal",
+      "share": 0.25,
+      "lift": 4.9,
+      "sources": 11
+     },
+     {
+      "word": "offshore",
+      "share": 0.23,
+      "lift": 4.1,
+      "sources": 13
+     },
+     {
+      "word": "nears",
+      "share": 0.23,
+      "lift": 90.8,
+      "sources": 9
+     }
+    ],
+    "example": "Chevron closes in on $5 billion Beacon deal, FT reports",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-16",
+   "symbol": "INTC",
+   "z": 5.48,
+   "current": 50,
+   "mean": 19.6,
+   "market": {
+    "excess_return": -0.0511,
+    "z": -0.7,
+    "volume_ratio": 0.9,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "shareholders",
+      "share": 0.27,
+      "lift": 104.3,
+      "sources": 16
+     },
+     {
+      "word": "lawsuit",
+      "share": 0.21,
+      "lift": 79.8,
+      "sources": 12
+     },
+     {
+      "word": "plunge",
+      "share": 0.17,
+      "lift": 6.4,
+      "sources": 10
+     }
+    ],
+    "example": "Can $50 Support Hold or Break Down as Intel Gets Sued by Shareholders after 29% Stock Plunge?",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-16",
+   "symbol": "NKE",
+   "z": 2.22,
+   "current": 12,
+   "mean": 5.6,
+   "market": {
+    "excess_return": 0.0262,
+    "z": 1.2,
+    "volume_ratio": 0.92,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-16",
+   "symbol": "WMT",
+   "z": 2.71,
+   "current": 18,
+   "mean": 9.6,
+   "market": {
+    "excess_return": 0.0216,
+    "z": 1.01,
+    "volume_ratio": 0.9,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-17",
+   "symbol": "CRM",
+   "z": 9.05,
+   "current": 24,
+   "mean": 4.6,
+   "market": {
+    "excess_return": -0.0844,
+    "z": -4.02,
+    "volume_ratio": 2.02,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-17",
+   "symbol": "DIS",
+   "z": 18.78,
+   "current": 47,
+   "mean": 5,
+   "market": {
+    "excess_return": -0.0047,
+    "z": -0.3,
+    "volume_ratio": 2.71,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "earnings",
+      "share": 0.43,
+      "lift": 32.9,
+      "sources": 15
+     },
+     {
+      "word": "billion",
+      "share": 0.19,
+      "lift": 89.2,
+      "sources": 7
+     }
+    ],
+    "example": "Disney Beats Fourth-Quarter Earnings Estimates as Streaming Revenue Rises 19%",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-17",
+   "symbol": "META",
+   "z": 3.82,
+   "current": 31,
+   "mean": 15.8,
+   "market": {
+    "excess_return": -0.0019,
+    "z": -0.09,
+    "volume_ratio": 0.67,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "platforms",
+      "share": 0.55,
+      "lift": 4.9,
+      "sources": 6
+     }
+    ],
+    "example": "51 ETFs Add to Meta Platforms (META) on Nov. 13",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-17",
+   "symbol": "NKE",
+   "z": 6.25,
+   "current": 32,
+   "mean": 7,
+   "market": {
+    "excess_return": -0.0528,
+    "z": -2.35,
+    "volume_ratio": 3.25,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "plan",
+      "share": 0.23,
+      "lift": 26.4,
+      "sources": 8
+     },
+     {
+      "word": "investor",
+      "share": 0.23,
+      "lift": 8.3,
+      "sources": 9
+     },
+     {
+      "word": "growth",
+      "share": 0.17,
+      "lift": 57.6,
+      "sources": 6
+     }
+    ],
+    "example": "First Look at Nike\u2019s New Game Plan Ahead of Investor Day",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-17",
+   "symbol": "UNH",
+   "z": 5.05,
+   "current": 31,
+   "mean": 10.6,
+   "market": {
+    "excess_return": -0.0441,
+    "z": -2.62,
+    "volume_ratio": 1.84,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-18",
+   "symbol": "SNOW",
+   "z": 2.16,
+   "current": 30,
+   "mean": 17.2,
+   "market": {
+    "excess_return": 0.0275,
+    "z": 1.07,
+    "volume_ratio": 0.95,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "pittsburgh",
+      "share": 0.16,
+      "lift": 40.3,
+      "sources": 6
+     },
+     {
+      "word": "polar",
+      "share": 0.16,
+      "lift": 40.3,
+      "sources": 6
+     },
+     {
+      "word": "bear",
+      "share": 0.16,
+      "lift": 40.3,
+      "sources": 6
+     }
+    ],
+    "example": "Beloved Polar Bear Snowflake Euthanized Just Days Before 31st Birthday At Pittsburgh Zoo",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-18",
+   "symbol": "UNH",
+   "z": 3.65,
+   "current": 51,
+   "mean": 14,
+   "market": {
+    "excess_return": -0.099,
+    "z": -5.29,
+    "volume_ratio": 3.99,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "medicare",
+      "share": 0.19,
+      "lift": 5.2,
+      "sources": 11
+     }
+    ],
+    "example": "Healthcare stocks (UnitedHealth, Humana, CVS, Cigna) fall on new Medicare rules",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-19",
+   "symbol": "GOOGL",
+   "z": 2.28,
+   "current": 22,
+   "mean": 13.6,
+   "market": {
+    "excess_return": -0.015,
+    "z": -0.5,
+    "volume_ratio": 1.43,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "anthropic",
+      "share": 0.43,
+      "lift": 9.1,
+      "sources": 10
+     }
+    ],
+    "example": "Alphabet shares fall 3.46% amid Anthropic IPO a...",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-19",
+   "symbol": "MU",
+   "z": 2.83,
+   "current": 35,
+   "mean": 21.8,
+   "market": {
+    "excess_return": -0.0014,
+    "z": -0.03,
+    "volume_ratio": 1.21,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-19",
+   "symbol": "WMT",
+   "z": 6.01,
+   "current": 43,
+   "mean": 14.6,
+   "market": {
+    "excess_return": 0.0093,
+    "z": 0.44,
+    "volume_ratio": 1.59,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "earnings",
+      "share": 0.35,
+      "lift": 6.9,
+      "sources": 14
+     },
+     {
+      "word": "outlook",
+      "share": 0.18,
+      "lift": 44.5,
+      "sources": 7
+     }
+    ],
+    "example": "Compared to Estimates, Walmart (WMT) Q3 Earnings: A Look at Key Metrics",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-20",
+   "symbol": "AAPL",
+   "z": 2.28,
+   "current": 22,
+   "mean": 13.6,
+   "market": {
+    "excess_return": 0.0174,
+    "z": 1.2,
+    "volume_ratio": 1.93,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "agent",
+      "share": 0.25,
+      "lift": 20.1,
+      "sources": 5
+     }
+    ],
+    "example": "AAPL Stock Alert: What to Know as Apple Develops AI Agent to Compete With Muse",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-23",
+   "symbol": "ARM",
+   "z": 2.17,
+   "current": 19,
+   "mean": 11.6,
+   "market": {
+    "excess_return": 0.1137,
+    "z": 2.01,
+    "volume_ratio": 1.51,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-23",
+   "symbol": "CRWD",
+   "z": 25.36,
+   "current": 81,
+   "mean": 6.2,
+   "market": {
+    "excess_return": -0.1363,
+    "z": -4.57,
+    "volume_ratio": 4.99,
+    "evidence": true
+   },
+   "story": {
+    "words": [
+     {
+      "word": "zscaler",
+      "share": 0.78,
+      "lift": 7.8,
+      "sources": 47
+     },
+     {
+      "word": "deal",
+      "share": 0.4,
+      "lift": 17.2,
+      "sources": 24
+     },
+     {
+      "word": "billion",
+      "share": 0.38,
+      "lift": 12.3,
+      "sources": 26
+     }
+    ],
+    "example": "Bernstein downgrades Zscaler stock rating on CrowdStrike deal terms",
+    "evidence": true
+   },
+   "evidence": [
+    "market",
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-23",
+   "symbol": "TSLA",
+   "z": 4.2,
+   "current": 48,
+   "mean": 21.2,
+   "market": {
+    "excess_return": 0.0675,
+    "z": 2.34,
+    "volume_ratio": 1.39,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-24",
+   "symbol": "BA",
+   "z": 2.18,
+   "current": 13,
+   "mean": 7,
+   "market": {
+    "excess_return": 0.0122,
+    "z": 0.41,
+    "volume_ratio": 0.72,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-24",
+   "symbol": "MU",
+   "z": 4.78,
+   "current": 55,
+   "mean": 26.5,
+   "market": {
+    "excess_return": -0.1052,
+    "z": -1.58,
+    "volume_ratio": 1.27,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-24",
+   "symbol": "ORCL",
+   "z": 2.21,
+   "current": 24,
+   "mean": 15.33,
+   "market": {
+    "excess_return": -0.0319,
+    "z": -0.68,
+    "volume_ratio": 0.54,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-25",
+   "symbol": "COIN",
+   "z": 3.57,
+   "current": 14,
+   "mean": 5.57,
+   "market": {
+    "excess_return": 0.0163,
+    "z": 0.5,
+    "volume_ratio": 1.14,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "buybacks",
+      "share": 0.31,
+      "lift": 70.0,
+      "sources": 5
+     }
+    ],
+    "example": "Coinbase CEO Confirms Stock Buybacks as COIN Loses 57% in 2026",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-25",
+   "symbol": "GOOGL",
+   "z": 2.0,
+   "current": 26,
+   "mean": 16.86,
+   "market": {
+    "excess_return": -0.0184,
+    "z": -0.61,
+    "volume_ratio": 1.13,
+    "evidence": false
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  },
+  {
+   "day": "2026-11-25",
+   "symbol": "MU",
+   "z": 2.19,
+   "current": 57,
+   "mean": 30.57,
+   "market": {
+    "excess_return": -0.0424,
+    "z": -0.61,
+    "volume_ratio": 1.68,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-25",
+   "symbol": "PLTR",
+   "z": 4.15,
+   "current": 24,
+   "mean": 10.14,
+   "market": {
+    "excess_return": 0.0178,
+    "z": 0.63,
+    "volume_ratio": 1.02,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "million",
+      "share": 0.34,
+      "lift": 5.8,
+      "sources": 8
+     },
+     {
+      "word": "thiel",
+      "share": 0.34,
+      "lift": 75.2,
+      "sources": 9
+     },
+     {
+      "word": "peter",
+      "share": 0.31,
+      "lift": 67.7,
+      "sources": 8
+     },
+     {
+      "word": "buys",
+      "share": 0.24,
+      "lift": 13.2,
+      "sources": 6
+     }
+    ],
+    "example": "American billionaire Peter Thiel buys $122 million of Palantir shares as stock slides",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-25",
+   "symbol": "SNOW",
+   "z": 2.22,
+   "current": 42,
+   "mean": 29.86,
+   "market": {
+    "excess_return": -0.0095,
+    "z": -0.39,
+    "volume_ratio": 0.88,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "moonswatch",
+      "share": 0.34,
+      "lift": 91.7,
+      "sources": 15
+     },
+     {
+      "word": "silver",
+      "share": 0.32,
+      "lift": 42.8,
+      "sources": 14
+     },
+     {
+      "word": "swatch",
+      "share": 0.3,
+      "lift": 79.5,
+      "sources": 13
+     },
+     {
+      "word": "omega",
+      "share": 0.18,
+      "lift": 48.9,
+      "sources": 8
+     }
+    ],
+    "example": "Introducing Swatch Offers Winter Whimsy With The MoonSwatch Mission to Earthphase Silver Snowflake",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-25",
+   "symbol": "XOM",
+   "z": 4.41,
+   "current": 20,
+   "mean": 7.57,
+   "market": {
+    "excess_return": 0.0019,
+    "z": 0.07,
+    "volume_ratio": 1.56,
+    "evidence": true
+   },
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [
+    "market"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-27",
+   "symbol": "PLTR",
+   "z": 2.61,
+   "current": 26,
+   "mean": 11.44,
+   "market": {
+    "excess_return": 0.0362,
+    "z": 1.26,
+    "volume_ratio": 0.7,
+    "evidence": false
+   },
+   "story": {
+    "words": [
+     {
+      "word": "deal",
+      "share": 0.33,
+      "lift": 20.6,
+      "sources": 6
+     },
+     {
+      "word": "poland",
+      "share": 0.33,
+      "lift": 61.7,
+      "sources": 8
+     }
+    ],
+    "example": "Palantir Lands Major Defense Deal as European Demand Grows",
+    "evidence": true
+   },
+   "evidence": [
+    "story"
+   ],
+   "verdict": "news found"
+  },
+  {
+   "day": "2026-11-28",
+   "symbol": "SHOP",
+   "z": 2.34,
+   "current": 6,
+   "mean": 2,
+   "market": null,
+   "story": {
+    "words": [],
+    "example": null,
+    "evidence": false
+   },
+   "evidence": [],
+   "verdict": "no news found"
+  }
+ ],
+ "checked_at": "2026-11-28T16:51+00:00"
+}
